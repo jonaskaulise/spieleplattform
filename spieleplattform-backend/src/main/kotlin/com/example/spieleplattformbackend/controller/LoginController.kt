@@ -1,4 +1,4 @@
-package com.example.spieleplattformbackend
+package com.example.spieleplattformbackend.controller
 
 import com.example.spieleplattformbackend.models.LoginData
 import org.springframework.http.MediaType
