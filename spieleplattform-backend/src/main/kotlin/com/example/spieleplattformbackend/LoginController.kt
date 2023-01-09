@@ -9,10 +9,10 @@ import kotlin.random.Random
 
 @RestController
 class LoginController {
-    //var random: Random = Random
-
     @PostMapping("/login", MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_JSON_VALUE)
     fun login(@RequestBody loginData: LoginData) : Boolean {
         return Random.nextBoolean()
     }
+
+
 }
