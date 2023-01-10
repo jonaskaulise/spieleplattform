@@ -17,4 +17,6 @@ interface GameRepository : CrudRepository<Game, Int> {
     fun findFirstByNameStartingWith(letter: String): Game?
 
     fun findGameByName(name: String): Game?
+
+    fun findGameById(id: Int): Game?
 }

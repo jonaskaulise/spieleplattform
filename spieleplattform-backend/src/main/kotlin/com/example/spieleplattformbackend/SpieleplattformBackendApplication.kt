@@ -20,6 +20,7 @@ class SpieleplattformBackendApplication {
             else
                 println("NoGameStartingWithM")
             gameService.printGameWithName("Minecraft")
+            //println(gameService.findGameWithId(1))
         })
     }
 }
