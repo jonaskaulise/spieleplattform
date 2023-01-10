@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="53567104-55c2-498a-a2a3-bbdb8f88c297" name="Changes" comment="" />
+    <list default="true" id="53567104-55c2-498a-a2a3-bbdb8f88c297" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/spieleplattform-frontend/src/pages/Game/Game.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spieleplattform-frontend/src/pages/Game/GameLayout.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spieleplattform-frontend/src/pages/Home.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spieleplattform-frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/spieleplattform-frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spieleplattform-frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/spieleplattform-frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spieleplattform-frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/spieleplattform-frontend/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spieleplattform-frontend/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/spieleplattform-frontend/src/index.tsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,13 +41,32 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "ts.external.directory.path": "/Applications/IntelliJ IDEA.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/spieleplattform-frontend/src" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/spieleplattform-frontend/src/pages/Game" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="spieleplattform" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="spieleplattform" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -49,6 +77,9 @@
       <option name="presentableId" value="Default" />
       <updated>1673359936019</updated>
       <workItem from="1673359937174" duration="3182000" />
+      <workItem from="1673364464487" duration="129000" />
+      <workItem from="1673365665590" duration="443000" />
+      <workItem from="1673366130604" duration="207000" />
     </task>
     <servers />
   </component>
