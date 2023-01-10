@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.*
 
+// bla
 @Service
 class GameService(@Autowired val gameRepository: GameRepository) {
     fun insertExampleGames() {
@@ -16,6 +17,7 @@ class GameService(@Autowired val gameRepository: GameRepository) {
         gameRepository.save(Game("Tetris", Date(84, 5, 6), "Alexei Paschitnow"))
     }
 
+    // bli
     fun getGamesCount() : Long {
         return gameRepository.countByIdNotNull()
     }
