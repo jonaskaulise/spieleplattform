@@ -1,10 +1,9 @@
 package com.example.spieleplattformbackend.models
 
 import jakarta.persistence.*
-import java.util.Date
+import java.util.*
 
 @Entity
-@Table(name = "games")
 class Game(
     @Column(nullable = false)
     var name: String,
@@ -12,11 +11,10 @@ class Game(
     var releaseDate: Date,
     @Column(nullable = true)
     var developer: String,
-    @Column(nullable = true)
-    @OneToMany(mappedBy = "game")
-    val ratings: Set<Rating>? = null,
+    @OneToMany(mappedBy = "game", fetch = FetchType.EAGER)
+    var ratings: List<Rating> = emptyList(),
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Int?=null
+    val id: Int? = null
 ) {
 }
