@@ -2,9 +2,9 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import {Link, Route, Routes} from "react-router-dom";
-import GameLayout from "./pages/Game/GameLayout";
-import Game from "./pages/Game/Game";
-import Home from "./pages/Home";
+import GameLayoutPage from "./pages/Game/GameLayoutPage";
+import GamePage from "./pages/Game/GamePage";
+import HomePage from "./pages/HomePage";
 
 function App() {
   return (
@@ -20,9 +20,9 @@ function App() {
           </ul>
         </nav>
         <Routes>
-          <Route path="/" element={<Home/>}/>
-          <Route path="/game" element={<GameLayout/>}>
-            <Route path=":id" element={<Game/>}/>
+          <Route path="/" element={<HomePage/>}/>
+          <Route path="/game" element={<GameLayoutPage/>}>
+            <Route path=":id" element={<GamePage/>}/>
           </Route>
         </Routes>
       </>
