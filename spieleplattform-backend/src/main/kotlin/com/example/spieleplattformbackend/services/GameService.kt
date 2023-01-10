@@ -17,7 +17,7 @@ class GameService(@Autowired val gameRepository: GameRepository) {
         gameRepository.save(Game("Tetris", Date(84, 5, 6), "Alexei Paschitnow"))
     }
 
-    // bli
+    // bliblablub
     fun getGamesCount() : Long {
         return gameRepository.countByIdNotNull()
     }
