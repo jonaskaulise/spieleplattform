@@ -4,7 +4,7 @@ export default function Game() {
     const {id} = useParams()
     return (
         <>
-            <h1>Game {id}</h1>
+            <h1></h1>
         </>
     );
 }
