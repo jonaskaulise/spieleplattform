@@ -23,7 +23,7 @@ class GameService(@Autowired val gameRepository: GameRepository) {
     }
 
     fun findFirstGameStartingWithM() : Game? {
-        return gameRepository.findFirstByNameStartingWith("M")
+        return gameRepository.findFirstByNameStartingWith("o")
     }
 
     fun findDevelopersStartingWithRorN() : List<String> {
