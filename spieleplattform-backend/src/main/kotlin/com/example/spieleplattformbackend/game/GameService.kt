@@ -76,4 +76,8 @@ class GameService(@Autowired val gameRepository: GameRepository, @Autowired val 
     fun findGameWithId(id: Int): Game? {
         return gameRepository.findGameById(id)
     }
+
+    fun getAllGames(): Iterable<Game> {
+        return gameRepository.findGamesByIdNotNull()
+    }
 }
