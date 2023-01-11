@@ -1,5 +1,6 @@
-package com.example.spieleplattformbackend.models
+package com.example.spieleplattformbackend.rating
 
+import com.example.spieleplattformbackend.game.Game
 import com.fasterxml.jackson.annotation.JsonBackReference
 import jakarta.persistence.*
 

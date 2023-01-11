@@ -1,4 +1,4 @@
-package com.example.spieleplattformbackend.models
+package com.example.spieleplattformbackend.login
 
 class LoginData(var username: String, var password: String) {
 }

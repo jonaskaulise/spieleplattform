@@ -1,9 +1,7 @@
-package com.example.spieleplattformbackend.services
+package com.example.spieleplattformbackend.game
 
-import com.example.spieleplattformbackend.models.Game
-import com.example.spieleplattformbackend.models.Rating
-import com.example.spieleplattformbackend.repositories.GameRepository
-import com.example.spieleplattformbackend.repositories.RatingRepository
+import com.example.spieleplattformbackend.rating.Rating
+import com.example.spieleplattformbackend.rating.RatingRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.time.LocalDate
