@@ -12,14 +12,14 @@ class SpieleplattformBackendApplication {
     fun run(gameService: GameService) : CommandLineRunner {
         return (CommandLineRunner {
             gameService.insertExampleGames()
-            println("GameCount: " + gameService.getGamesCount())
-            println("Developers: " + gameService.findDevelopersStartingWithRorN())
-            val firstGameWithM = gameService.findFirstGameStartingWithM()
-            if (firstGameWithM != null)
-                println("FirstGameWithM: " + firstGameWithM.name)
-            else
-                println("NoGameStartingWithM")
-            gameService.printGameWithName("Minecraft")
+//            println("GameCount: " + gameService.getGamesCount())
+//            println("Developers: " + gameService.findDevelopersStartingWithRorN())
+//            val firstGameWithM = gameService.findFirstGameStartingWithM()
+//            if (firstGameWithM != null)
+//                println("FirstGameWithM: " + firstGameWithM.name)
+//            else
+//                println("NoGameStartingWithM")
+//            gameService.printGameWithName("Minecraft")
             //println(gameService.findGameWithId(1))
         })
     }

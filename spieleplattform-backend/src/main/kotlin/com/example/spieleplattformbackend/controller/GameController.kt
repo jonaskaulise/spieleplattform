@@ -12,11 +12,9 @@ import org.springframework.web.server.ResponseStatusException
 @RestController
 class GameController(@Autowired var gameService: GameService) {
     @GetMapping("/game/{id}")
-    fun game(@PathVariable id: Int) : Game {
-        val game = gameService.findGameWithId(id)
-        if (game == null)
-            throw ResponseStatusException(HttpStatus.NOT_FOUND)
-        return game
+    fun game(@PathVariable id: Int): Game {
+        return gameService.findGameWithId(id)
+            ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
     }
 
 }
