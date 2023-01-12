@@ -13,6 +13,8 @@ class Game(
     var releaseDate: LocalDate,
     @Column(nullable = true)
     var developer: String,
+    @Column(nullable = true, length = 10000)
+    var imgUrl: String,
     @OneToMany(mappedBy = "game", fetch = FetchType.EAGER)
     @JsonManagedReference
     var ratings: List<Rating> = emptyList(),
