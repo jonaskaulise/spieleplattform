@@ -1,6 +1,6 @@
 import {Outlet} from "react-router-dom";
 
-export default function GameLayout() {
+export default function GameLayoutPage() {
     return (
         <>
             <Outlet/>
