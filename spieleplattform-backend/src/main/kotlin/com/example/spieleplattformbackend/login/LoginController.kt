@@ -1,6 +1,5 @@
-package com.example.spieleplattformbackend.controller
+package com.example.spieleplattformbackend.login
 
-import com.example.spieleplattformbackend.models.LoginData
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
