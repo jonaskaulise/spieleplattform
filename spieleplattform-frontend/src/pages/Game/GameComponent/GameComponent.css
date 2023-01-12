@@ -42,7 +42,7 @@
 }
 
 .flip-card-front {
-    background-color: #bbb;
+    background-color: transparent;
     color: black;
 }
 

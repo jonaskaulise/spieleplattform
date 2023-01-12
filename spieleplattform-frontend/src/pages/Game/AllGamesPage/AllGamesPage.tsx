@@ -27,6 +27,7 @@ export default function AllGamesPage() {
                     name={game.name}
                     releaseDate={game.releaseDate}
                     developer={game.developer}
+                    imgUrl={game.imgUrl}
                     ratings={game.ratings}
                 />
             )}
