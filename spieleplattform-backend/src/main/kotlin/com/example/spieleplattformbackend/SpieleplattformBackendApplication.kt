@@ -19,6 +19,7 @@ class SpieleplattformBackendApplication {
                 println("FirstGameWithM: " + firstGameWithM.name)
             else
                 println("NoGameStartingWithM")
+            gameService.printGameWithName("Minecraft")
         })
     }
 }

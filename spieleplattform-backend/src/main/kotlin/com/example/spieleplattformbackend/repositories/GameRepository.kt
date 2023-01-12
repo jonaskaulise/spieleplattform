@@ -7,12 +7,14 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface GameRepository : CrudRepository<Game, Int> {
-    fun countByIdNotNull() : Long
+    fun countByIdNotNull(): Long
 
-    @Query(value ="SELECT developer FROM games WHERE developer LIKE 'R%' OR developer LIKE 'N%'", nativeQuery = true)
-    fun findDevelopersStartingWithRorNSQL() : List<String>
+    @Query(value = "SELECT developer FROM games WHERE developer LIKE 'R%' OR developer LIKE 'N%'", nativeQuery = true)
+    fun findDevelopersStartingWithRorNSQL(): List<String>
 
-    fun findAllByDeveloperStartingWithOrDeveloperStartingWith(letterOne: String, letterTwo: String) : List<Game>
+    fun findAllByDeveloperStartingWithOrDeveloperStartingWith(letterOne: String, letterTwo: String): List<Game>
 
-    fun findFirstByNameStartingWith(letter: String) : Game?
+    fun findFirstByNameStartingWith(letter: String): Game?
+
+    fun findGameByName(name: String): Game?
 }
