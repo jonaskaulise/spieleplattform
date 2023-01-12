@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import {Link, Route, Routes} from "react-router-dom";
+import {NavLink, Route, Routes} from "react-router-dom";
 import GameLayoutPage from "./pages/Game/GameLayoutPage";
 import GamePage from "./pages/Game/GamePage";
 import HomePage from "./pages/HomePage";
@@ -13,7 +13,14 @@ function App() {
             <nav>
                 <ul>
                     <li>
-                        <Link to="/">Home</Link>
+                        <NavLink className={({ isActive}) => {
+                            return isActive ? "is-active" : ""
+                        }} to="/">Home</NavLink>
+                    </li>
+                    <li>
+                        <NavLink className={({ isActive}) => {
+                            return isActive ? "is-active" : ""
+                        }} to="/game">Games</NavLink>
                     </li>
                 </ul>
             </nav>
