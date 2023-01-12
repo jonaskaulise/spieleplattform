@@ -74,4 +74,8 @@ class GameService(@Autowired val gameRepository: GameRepository, @Autowired val 
 
         return games.map { game: Game -> game.developer }
     }
+
+    fun findGameWithId(id: Int): Game? {
+        return gameRepository.findGameById(id)
+    }
 }
