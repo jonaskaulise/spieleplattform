@@ -10,10 +10,15 @@ import org.springframework.web.server.ResponseStatusException
 //@CrossOrigin("http://localhost:3000", maxAge = 3600)
 @RestController
 class GameController(@Autowired var gameService: GameService) {
+
+    @GetMapping("/game")
+    fun games(): Iterable<Game> {
+        return gameService.getAllGames()
+    }
+
     @GetMapping("/game/{id}")
     fun game(@PathVariable id: Int): Game {
         return gameService.findGameWithId(id)
             ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
     }
-
 }

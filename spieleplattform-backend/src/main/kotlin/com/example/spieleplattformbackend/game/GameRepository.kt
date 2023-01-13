@@ -18,4 +18,6 @@ interface GameRepository : CrudRepository<Game, Int> {
     fun findGameByName(name: String): Game?
 
     fun findGameById(id: Int): Game?
+
+    fun findGamesByIdNotNull(): Iterable<Game>
 }

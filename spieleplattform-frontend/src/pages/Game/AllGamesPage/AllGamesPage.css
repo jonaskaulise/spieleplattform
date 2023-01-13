@@ -1,0 +1,7 @@
+.flex-container {
+    margin: auto;
+    padding: 25px;
+    max-width: 1200px;
+    display: flex;
+    flex-wrap: wrap;
+}
