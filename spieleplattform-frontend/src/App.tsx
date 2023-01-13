@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
 import {NavLink, Route, Routes} from "react-router-dom";
 import GameLayoutPage from "./pages/Game/GameLayoutPage";
 import GamePage from "./pages/Game/GamePage";

@@ -2,7 +2,7 @@ import Game from "../Game";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import GameComponent from "../GameComponent/GameComponent";
-import "./AllGamesPage.css"
+import "./AllGamesPage.scss"
 import Error404Page from "../../Error/Error404Page";
 import ErrorPage from "../../Error/ErrorPage";
 
