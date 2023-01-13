@@ -1,5 +1,6 @@
 package com.example.spieleplattformbackend.game
 
+import com.example.spieleplattformbackend.gameConsole.GameConsoleRepository
 import com.example.spieleplattformbackend.rating.Rating
 import com.example.spieleplattformbackend.rating.RatingRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -7,7 +8,11 @@ import org.springframework.stereotype.Service
 import java.time.LocalDate
 
 @Service
-class GameService(@Autowired val gameRepository: GameRepository, @Autowired val ratingRepository: RatingRepository) {
+class GameService(
+    @Autowired val gameRepository: GameRepository,
+    @Autowired val ratingRepository: RatingRepository,
+    @Autowired val gameConsoleRepository: GameConsoleRepository
+) {
     fun insertExampleGames() {
         //minecraft
         val minecraft = Game(

@@ -1,5 +1,6 @@
 package com.example.spieleplattformbackend.game
 
+import com.example.spieleplattformbackend.gameConsole.GameConsole
 import com.example.spieleplattformbackend.rating.Rating
 import com.fasterxml.jackson.annotation.JsonManagedReference
 import jakarta.persistence.*
@@ -12,6 +13,9 @@ class Game(
     var developer: String,
     @Column(length = 10000)
     var imgUrl: String,
+    @ManyToMany(mappedBy = "games", fetch = FetchType.EAGER)
+    @JsonManagedReference
+    var gameConsoles: List<GameConsole> = mutableListOf(),
     @OneToMany(mappedBy = "game", fetch = FetchType.EAGER)
     @JsonManagedReference
     var ratings: List<Rating> = mutableListOf(),
@@ -24,6 +28,6 @@ class Game(
         for (rating in ratings) {
             gameString += "${rating.ratingValue}, ${rating.comment}\r\n"
         }
-        return gameString;
+        return gameString
     }
 }
