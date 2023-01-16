@@ -12,7 +12,7 @@ export default function GamePage() {
     const [errorStatus, setErrorStatus] = useState(null);
 
     useEffect(() => {
-        axios.get("/game/" + id)
+        axios.get("/games/" + id)
             .then((response) => {
                 setGame(response.data)
             })
