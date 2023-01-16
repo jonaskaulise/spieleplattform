@@ -24,6 +24,4 @@ class GameController(@Autowired var gameService: GameService) {
         return gameService.getGameById(id)
             ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
     }
-
-
 }
