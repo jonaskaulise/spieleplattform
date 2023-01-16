@@ -5,13 +5,19 @@
 }
 
 .filter-form {
-    padding: 25px 50px 0 50px;
+    padding: 0 50px 0 50px;
 
-    select {
+    select, input {
         height: 25px;
         font-size: 15px;
         border: 1px black solid;
         border-radius: 5px;
+        color: black;
+        margin: 25px 25px 0 0;
+    }
+
+    input {
+        padding: 0 5px 0 5px
     }
 }
 
