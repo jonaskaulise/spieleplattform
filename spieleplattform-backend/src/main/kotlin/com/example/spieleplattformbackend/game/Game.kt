@@ -13,12 +13,12 @@ class Game(
     var developer: String,
     @Column(length = 10000)
     var imgUrl: String,
-    @ManyToMany(mappedBy = "games", fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.MERGE])
     @JsonManagedReference
-    var gameConsoles: List<GameConsole> = mutableListOf(),
+    var gameConsoles: MutableList<GameConsole> = mutableListOf(),
     @OneToMany(mappedBy = "game", fetch = FetchType.EAGER)
     @JsonManagedReference
-    var ratings: List<Rating> = mutableListOf(),
+    var ratings: MutableList<Rating> = mutableListOf(),
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int? = null

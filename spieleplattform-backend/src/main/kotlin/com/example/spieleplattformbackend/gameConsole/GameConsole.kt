@@ -7,9 +7,9 @@ import jakarta.persistence.*
 @Entity
 class GameConsole(
     var name: String,
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.MERGE], mappedBy = "gameConsoles")
     @JsonBackReference
-    var games: List<Game> = mutableListOf(),
+    var games: MutableList<Game> = mutableListOf(),
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int? = null
