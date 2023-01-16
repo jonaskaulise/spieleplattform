@@ -2,15 +2,11 @@ package com.example.spieleplattformbackend.game
 
 import com.example.spieleplattformbackend.gameConsole.GameConsole
 import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 
 @Repository
 interface GameRepository : JpaRepository<Game, Int> {
     fun countByIdNotNull(): Long
-
-    @Query(value = "SELECT developer FROM games WHERE developer LIKE 'R%' OR developer LIKE 'N%'", nativeQuery = true)
-    fun findDevelopersStartingWithRorNSQL(): List<String>
 
     fun findAllByDeveloperStartingWithOrDeveloperStartingWith(letterOne: String, letterTwo: String): List<Game>
 
@@ -23,4 +19,11 @@ interface GameRepository : JpaRepository<Game, Int> {
     fun findGamesByIdNotNull(): Iterable<Game>
 
     fun findGamesByGameConsolesContains(gameConsole: GameConsole): Iterable<Game>
+
+    fun findGamesByNameContainsIgnoreCase(nameSearch: String): Iterable<Game>
+
+    fun findGamesByGameConsolesContainsAndNameContainsIgnoreCase(
+        gameConsole: GameConsole,
+        nameSearch: String
+    ): Iterable<Game>
 }

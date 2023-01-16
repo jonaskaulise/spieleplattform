@@ -215,10 +215,17 @@ class GameService(
         return gameRepository.findGamesByIdNotNull()
     }
 
-    fun getGamesByGameConsoleId(id: Int): Iterable<Game> {
-        val gameConsole = gameConsoleRepository.findGameConsoleById(id) ?: return emptyList()
+    fun getGamesByGameConsoleId(consoleId: Int): Iterable<Game> {
+        val gameConsole = gameConsoleRepository.findGameConsoleById(consoleId) ?: return emptyList()
         return gameRepository.findGamesByGameConsolesContains(gameConsole)
     }
 
+    fun getGamesByNameSearch(nameSearch: String): Iterable<Game> {
+        return gameRepository.findGamesByNameContainsIgnoreCase(nameSearch)
+    }
 
+    fun getGamesByConsoleIdAndNameSearch(consoleId: Int, nameSearch: String): Iterable<Game> {
+        val gameConsole = gameConsoleRepository.findGameConsoleById(consoleId) ?: return emptyList()
+        return gameRepository.findGamesByGameConsolesContainsAndNameContainsIgnoreCase(gameConsole, nameSearch)
+    }
 }
