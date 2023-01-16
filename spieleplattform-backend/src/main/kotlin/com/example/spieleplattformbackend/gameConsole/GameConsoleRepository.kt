@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface GameConsoleRepository : JpaRepository<GameConsole, Int> {
-
+    fun findGameConsoleById(id: Int): GameConsole?
 }

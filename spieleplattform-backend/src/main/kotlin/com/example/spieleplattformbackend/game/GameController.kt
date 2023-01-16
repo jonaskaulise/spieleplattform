@@ -4,21 +4,26 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.server.ResponseStatusException
 
-//@CrossOrigin("http://localhost:3000", maxAge = 3600)
 @RestController
 class GameController(@Autowired var gameService: GameService) {
 
-    @GetMapping("/game")
-    fun games(): Iterable<Game> {
-        return gameService.getAllGames()
+    @GetMapping("/games")
+    fun gamesOfGameConsoleId(@RequestParam(required = false, defaultValue = "0") gameConsoleId: Int): Iterable<Game> {
+        return if (gameConsoleId == 0)
+            gameService.getAllGames()
+        else
+            gameService.getGamesByGameConsoleId(gameConsoleId)
     }
 
-    @GetMapping("/game/{id}")
+    @GetMapping("/games/{id}")
     fun game(@PathVariable id: Int): Game {
-        return gameService.findGameWithId(id)
+        return gameService.getGameById(id)
             ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
     }
+
+
 }

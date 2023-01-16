@@ -149,7 +149,7 @@ class GameService(
             "Read Dead Redemption 2",
             LocalDate.of(2018, 10, 26),
             "Rockstar Games",
-            "https://www.gtabase.com/igallery/4201-4300/RDR_2_Cover_PC-4213-1920.jpg"
+            "https://image.api.playstation.com/cdn/UP1004/CUSA03041_00/Hpl5MtwQgOVF9vJqlfui6SDB5Jl4oBSq.png"
         )
         redDeadRedemption2.gameConsoles = mutableListOf(xboxOne, ps4)
         xboxOne.games.add(redDeadRedemption2)
@@ -207,11 +207,18 @@ class GameService(
         return games.map { game: Game -> game.developer }
     }
 
-    fun findGameWithId(id: Int): Game? {
+    fun getGameById(id: Int): Game? {
         return gameRepository.findGameById(id)
     }
 
     fun getAllGames(): Iterable<Game> {
         return gameRepository.findGamesByIdNotNull()
     }
+
+    fun getGamesByGameConsoleId(id: Int): Iterable<Game> {
+        val gameConsole = gameConsoleRepository.findGameConsoleById(id) ?: return emptyList()
+        return gameRepository.findGamesByGameConsolesContains(gameConsole)
+    }
+
+
 }

@@ -1,5 +1,6 @@
 package com.example.spieleplattformbackend.game
 
+import com.example.spieleplattformbackend.gameConsole.GameConsole
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
@@ -20,4 +21,6 @@ interface GameRepository : JpaRepository<Game, Int> {
     fun findGameById(id: Int): Game?
 
     fun findGamesByIdNotNull(): Iterable<Game>
+
+    fun findGamesByGameConsolesContains(gameConsole: GameConsole): Iterable<Game>
 }
