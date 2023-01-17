@@ -1,12 +1,12 @@
 package com.example.spieleplattformbackend.game
 
 import com.example.spieleplattformbackend.gameConsole.GameConsole
-import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
+import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface GameRepository : JpaRepository<Game, Int> {
+interface GameRepository : CrudRepository<Game, Int> {
     fun countByIdNotNull(): Long
 
     @Query(value = "SELECT developer FROM games WHERE developer LIKE 'R%' OR developer LIKE 'N%'", nativeQuery = true)
@@ -19,8 +19,6 @@ interface GameRepository : JpaRepository<Game, Int> {
     fun findGameByName(name: String): Game?
 
     fun findGameById(id: Int): Game?
-
-    fun findGamesByIdNotNull(): Iterable<Game>
 
     fun findGamesByGameConsolesContains(gameConsole: GameConsole): Iterable<Game>
 }

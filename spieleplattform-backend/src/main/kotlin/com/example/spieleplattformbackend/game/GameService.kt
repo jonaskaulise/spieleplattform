@@ -5,7 +5,9 @@ import com.example.spieleplattformbackend.gameConsole.GameConsoleRepository
 import com.example.spieleplattformbackend.rating.Rating
 import com.example.spieleplattformbackend.rating.RatingRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
+import org.springframework.web.server.ResponseStatusException
 import java.time.LocalDate
 
 @Service
@@ -212,11 +214,12 @@ class GameService(
     }
 
     fun getAllGames(): Iterable<Game> {
-        return gameRepository.findGamesByIdNotNull()
+        return gameRepository.findAll()
     }
 
     fun getGamesByGameConsoleId(id: Int): Iterable<Game> {
-        val gameConsole = gameConsoleRepository.findGameConsoleById(id) ?: return emptyList()
+        val gameConsole =
+            gameConsoleRepository.findGameConsoleById(id) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
         return gameRepository.findGamesByGameConsolesContains(gameConsole)
     }
 
