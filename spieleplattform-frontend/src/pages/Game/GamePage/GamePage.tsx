@@ -1,9 +1,8 @@
 import {useParams} from "react-router-dom";
-import Game from "./Game";
+import Game from "../Game";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import Error404Page from "../Error/Error404Page";
-import ErrorPage from "../Error/ErrorPage";
+import Error from "../../Error/Error";
 
 export default function GamePage() {
     const {id} = useParams()
@@ -21,10 +20,14 @@ export default function GamePage() {
             })
     }, [id])
 
-    if (errorStatus)
-        return errorStatus === 404 ? <Error404Page/> : <ErrorPage/>
+    if (errorStatus) {
+        return <Error message={"Error " + errorStatus}></Error>
+    }
     return game && (
         <>
+            <div className="game-info">
+
+            </div>
             <h1>{game.name}</h1>
             <h2>{game.developer}</h2>
             <h2>{game.releaseDate.toString()}</h2>

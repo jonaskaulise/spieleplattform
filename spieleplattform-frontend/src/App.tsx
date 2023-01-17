@@ -2,10 +2,10 @@ import React from 'react';
 import './App.scss';
 import {NavLink, Route, Routes} from "react-router-dom";
 import GameLayoutPage from "./pages/Game/GameLayoutPage";
-import GamePage from "./pages/Game/GamePage";
+import GamePage from "./pages/Game/GamePage/GamePage";
 import HomePage from "./pages/HomePage";
-import ErrorPage from "./pages/Error/Error404Page";
 import AllGamesPage from "./pages/Game/AllGamesPage/AllGamesPage";
+import Error from "./pages/Error/Error";
 
 function App() {
     return (
@@ -18,7 +18,7 @@ function App() {
                         }} to="/">Home</NavLink>
                     </li>
                     <li>
-                        <NavLink className={({ isActive}) => {
+                        <NavLink reloadDocument className={({ isActive}) => {
                             return isActive ? "is-active" : ""
                         }} to="/games">Games</NavLink>
                     </li>
@@ -30,7 +30,7 @@ function App() {
                     <Route path="" element={<AllGamesPage/>}/>
                     <Route path=":id" element={<GamePage/>}/>
                 </Route>
-                <Route path="/*" element={<ErrorPage/>}/>
+                <Route path="/*" element={<Error message="Error 404"/>}/>
             </Routes>
         </>
     );
