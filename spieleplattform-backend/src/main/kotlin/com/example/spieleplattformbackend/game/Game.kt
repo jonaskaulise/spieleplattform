@@ -7,19 +7,23 @@ import java.time.LocalDate
 
 @Entity
 class Game(
-    @Column(nullable = false)
     var name: String,
-    @Column(nullable = true)
     var releaseDate: LocalDate,
-    @Column(nullable = true)
     var developer: String,
-    @Column(nullable = true, length = 10000)
+    @Column(length = 10000)
     var imgUrl: String,
     @OneToMany(mappedBy = "game", fetch = FetchType.EAGER)
     @JsonManagedReference
-    var ratings: List<Rating> = emptyList(),
+    var ratings: List<Rating> = mutableListOf(),
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int? = null
 ) {
+    override fun toString(): String {
+        var gameString = "Name: $name \r\nDeveloper: $developer \r\nRelease date: $releaseDate \r\n"
+        for (rating in ratings) {
+            gameString += "${rating.ratingValue}, ${rating.comment}\r\n"
+        }
+        return gameString;
+    }
 }

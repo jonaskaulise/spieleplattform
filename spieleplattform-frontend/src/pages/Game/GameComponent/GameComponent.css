@@ -17,6 +17,12 @@
     }
 }
 
+@media (max-width: 300px) {
+    .flip-card {
+        width: 100%;
+    }
+}
+
 .flip-card-inner {
     position: relative;
     width: 100%;

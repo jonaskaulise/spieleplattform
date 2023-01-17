@@ -16,7 +16,7 @@ class GameService(@Autowired val gameRepository: GameRepository, @Autowired val 
             "Mojang Studios",
             "https://www.minecraft.net/content/dam/games/minecraft/key-art/Games_Subnav_Minecraft-300x465.jpg"
         )
-        minecraft.ratings = listOf(
+        minecraft.ratings = mutableListOf(
             Rating(5, "Best Game ever", minecraft),
             Rating(4, "Good, but only Blocks", minecraft),
             Rating(2, "Game is ok, but i dont like the graphics", minecraft)
@@ -29,7 +29,7 @@ class GameService(@Autowired val gameRepository: GameRepository, @Autowired val 
             "Maxis",
             "https://simscommunity.info/wp-content/uploads/2019/07/boxart.jpg"
         )
-        sims.ratings = listOf(
+        sims.ratings = mutableListOf(
             Rating(5, "I love it", sims)
         )
         gameRepository.save(sims)
@@ -40,7 +40,7 @@ class GameService(@Autowired val gameRepository: GameRepository, @Autowired val 
             "Rockstar North",
             "https://media.rockstargames.com/rockstargames/img/global/news/upload/actual_1364906194.jpg"
         )
-        gta.ratings = listOf(
+        gta.ratings = mutableListOf(
             Rating(5, "Awesome game, you can do whatever you want!", gta),
             Rating(3, "Good game, but to much violence", gta)
         )
@@ -52,7 +52,7 @@ class GameService(@Autowired val gameRepository: GameRepository, @Autowired val 
             "Nintendo Research",
             "https://image.konsolenkost.de/item/images/9074377/full/nes-super-mario-bros-1-alternatives-cover.jpg"
         )
-        superMario.ratings = listOf(
+        superMario.ratings = mutableListOf(
             Rating(5, "I love this game", superMario)
         )
         gameRepository.save(superMario)
@@ -75,24 +75,14 @@ class GameService(@Autowired val gameRepository: GameRepository, @Autowired val 
 
     fun printGameWithName(name: String) {
         val game = gameRepository.findGameByName(name) ?: return
-
-        println("${game.name}, ${game.developer}, ${game.releaseDate}")
-        println("Ratings: ")
-        for (ratings in game.ratings) {
-            println("${ratings.ratingValue}, ${ratings.comment}")
-        }
+        println(game.toString())
     }
 
-    fun getGamesCount(): Long {
-        return gameRepository.countByIdNotNull()
-    }
+    fun getGamesCount(): Long = gameRepository.countByIdNotNull()
 
-    fun findFirstGameStartingWithM(): Game? {
-        return gameRepository.findFirstByNameStartingWith("M")
-    }
+    fun findFirstGameStartingWithM(): Game? = gameRepository.findFirstByNameStartingWith("M")
 
     fun findDevelopersStartingWithRorN(): List<String> {
-        //return gameRepository.findDevelopersStartingWithRorNSQL()
         val games = gameRepository.findAllByDeveloperStartingWithOrDeveloperStartingWith("R", "N")
 
         return games.map { game: Game -> game.developer }

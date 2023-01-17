@@ -4,7 +4,7 @@ import {NavLink, Route, Routes} from "react-router-dom";
 import GameLayoutPage from "./pages/Game/GameLayoutPage";
 import GamePage from "./pages/Game/GamePage";
 import HomePage from "./pages/HomePage";
-import ErrorPage from "./pages/ErrorPage";
+import ErrorPage from "./pages/Error/Error404Page";
 import AllGamesPage from "./pages/Game/AllGamesPage/AllGamesPage";
 
 function App() {

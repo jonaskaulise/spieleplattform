@@ -6,9 +6,7 @@ import jakarta.persistence.*
 
 @Entity
 class Rating(
-    @Column(nullable = false)
     var ratingValue: Int,
-    @Column(nullable = true)
     var comment: String,
     @ManyToOne
     @JsonBackReference
