@@ -14,7 +14,7 @@ class SpieleplattformBackendApplication {
     @Bean
     fun run(gameService: GameService) : CommandLineRunner {
         return (CommandLineRunner {
-            gameService.insertExampleGames()
+            gameService.insertExampleData()
             println("GameCount: " + gameService.getGamesCount())
             println("Developers: " + gameService.findDevelopersStartingWithRorN())
             val firstGameWithM = gameService.findFirstGameStartingWithM()

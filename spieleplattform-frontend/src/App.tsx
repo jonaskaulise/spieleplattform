@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
 import {NavLink, Route, Routes} from "react-router-dom";
 import GameLayoutPage from "./pages/Game/GameLayoutPage";
 import GamePage from "./pages/Game/GamePage";
@@ -20,13 +20,13 @@ function App() {
                     <li>
                         <NavLink className={({ isActive}) => {
                             return isActive ? "is-active" : ""
-                        }} to="/game">Games</NavLink>
+                        }} to="/games">Games</NavLink>
                     </li>
                 </ul>
             </nav>
             <Routes>
                 <Route path="/" element={<HomePage/>}/>
-                <Route path="/game" element={<GameLayoutPage/>}>
+                <Route path="/games" element={<GameLayoutPage/>}>
                     <Route path="" element={<AllGamesPage/>}/>
                     <Route path=":id" element={<GamePage/>}/>
                 </Route>
