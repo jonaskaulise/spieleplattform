@@ -90,7 +90,10 @@ export default function AllGamesPage() {
                         name={game.name}
                         releaseDate={game.releaseDate}
                         developer={game.developer}
+                        description={game.description}
                         imgUrl={game.imgUrl}
+                        youtubeId={game.youtubeId}
+                        gameConsoles={game.gameConsoles}
                         ratings={game.ratings}
                     />
                 )}

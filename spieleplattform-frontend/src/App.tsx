@@ -6,6 +6,9 @@ import GamePage from "./pages/Game/GamePage/GamePage";
 import HomePage from "./pages/HomePage";
 import AllGamesPage from "./pages/Game/AllGamesPage/AllGamesPage";
 import Error from "./pages/Error/Error";
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import {library} from "@fortawesome/fontawesome-svg-core";
+library.add(fas)
 
 function App() {
     return (

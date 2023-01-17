@@ -16,7 +16,7 @@ class Game(
     @Column(length = 65535)
     var imgUrl: String,
     @Column(length = 65535)
-    var trailerUrl: String,
+    var youtubeId: String,
     @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.MERGE])
     @JsonManagedReference
     var gameConsoles: MutableList<GameConsole> = mutableListOf(),
