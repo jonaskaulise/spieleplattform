@@ -6,6 +6,6 @@ import org.springframework.stereotype.Service
 @Service
 class GameConsoleService(@Autowired val gameConsoleRepository: GameConsoleRepository) {
     fun getGameConsoles(): Iterable<GameConsole> {
-        return gameConsoleRepository.findGameConsolesByIdNotNull()
+        return gameConsoleRepository.findAll()
     }
 }
