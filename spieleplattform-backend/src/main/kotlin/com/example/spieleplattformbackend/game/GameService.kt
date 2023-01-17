@@ -228,7 +228,8 @@ class GameService(
     }
 
     fun getGamesByConsoleIdAndNameSearch(consoleId: Int, nameSearch: String): Iterable<Game> {
-        val gameConsole = gameConsoleRepository.findGameConsoleById(consoleId) ?: return emptyList()
+        val gameConsole =
+            gameConsoleRepository.findGameConsoleById(consoleId) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
         return gameRepository.findGamesByGameConsolesContainsAndNameContainsIgnoreCase(gameConsole, nameSearch)
     }
 }
