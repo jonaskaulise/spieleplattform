@@ -39,12 +39,12 @@ export default function GamePage() {
                     <h1>{game.name}</h1>
                     <div className="game-details">
                         <div className="identifier">
-                            <h2>Developer:</h2>
-                            <h2>ReleaseDate:</h2>
+                            <h3>Developer:</h3>
+                            <h3>ReleaseDate:</h3>
                         </div>
                         <div className="entries">
-                            <h2>{game.developer}</h2>
-                            <h2>{game.releaseDate.toString()}</h2>
+                            <h3>{game.developer}</h3>
+                            <h3>{game.releaseDate.toString()}</h3>
                         </div>
                     </div>
                     <p>{game.description}</p>
