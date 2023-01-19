@@ -6,15 +6,11 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface GameRepository : CrudRepository<Game, Int> {
-    fun countByIdNotNull(): Long
-
     fun findAllByDeveloperStartingWithOrDeveloperStartingWith(letterOne: String, letterTwo: String): List<Game>
 
     fun findFirstByNameStartingWith(letter: String): Game?
 
     fun findGameByName(name: String): Game?
-
-    fun findGameById(id: Int): Game?
 
     fun findGamesByGameConsolesContains(gameConsole: GameConsole): Iterable<Game>
 

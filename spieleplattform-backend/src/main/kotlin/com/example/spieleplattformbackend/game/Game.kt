@@ -7,7 +7,7 @@ import jakarta.persistence.*
 import java.time.LocalDate
 
 @Entity
-class Game(
+data class Game(
     var name: String,
     var releaseDate: LocalDate,
     var developer: String,

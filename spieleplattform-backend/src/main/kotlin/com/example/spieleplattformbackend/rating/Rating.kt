@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference
 import jakarta.persistence.*
 
 @Entity
-class Rating(
+data class Rating(
     var ratingValue: Int,
     var comment: String,
     @ManyToOne
@@ -13,6 +13,6 @@ class Rating(
     var game: Game,
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Int?=null
+    val id: Int? = null
 ) {
 }

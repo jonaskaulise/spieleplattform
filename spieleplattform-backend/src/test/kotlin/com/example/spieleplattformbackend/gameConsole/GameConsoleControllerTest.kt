@@ -1,0 +1,3 @@
+package com.example.spieleplattformbackend.gameConsole
+
+class GameConsoleControllerTest
