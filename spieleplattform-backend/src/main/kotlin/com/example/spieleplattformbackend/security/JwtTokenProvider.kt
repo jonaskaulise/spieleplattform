@@ -2,7 +2,6 @@ package com.example.spieleplattformbackend.security
 
 import io.jsonwebtoken.JwtException
 import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
 import org.springframework.stereotype.Component
 import java.security.Key
@@ -12,11 +11,12 @@ import java.util.*
 
 @Component
 class JwtTokenProvider {
-    val key: Key = Keys.secretKeyFor(SignatureAlgorithm.HS512)
+    private final val secret = "kj32h4jltuvladfjkahrecu19875cn2809437r8"
+    val key: Key = Keys.hmacShaKeyFor(secret.toByteArray())
 
     fun generateToken(userEmail: String): String {
         val now = Instant.now()
-        val expiration = now.plus(2, ChronoUnit.HOURS);
+        val expiration = now.plus(2, ChronoUnit.HOURS)
 
         return Jwts.builder()
             .setSubject(userEmail)

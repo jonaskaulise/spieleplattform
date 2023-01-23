@@ -10,10 +10,15 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.util.StringUtils
 import org.springframework.web.filter.OncePerRequestFilter
 
-class JwtAuthenticationFilter(
-    @Autowired val jwtTokenProvider: JwtTokenProvider,
-    @Autowired val customUserDetailsService: CustomUserDetailsService
-) : OncePerRequestFilter() {
+
+class JwtAuthenticationFilter() : OncePerRequestFilter() {
+
+    @Autowired
+    lateinit var jwtTokenProvider: JwtTokenProvider
+
+    @Autowired
+    lateinit var customUserDetailsService: CustomUserDetailsService
+
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
@@ -24,15 +29,15 @@ class JwtAuthenticationFilter(
         if (jwt != null && jwtTokenProvider.validateToken(jwt)) {
             val email = jwtTokenProvider.getUserMailFromToken(jwt)
             val userDetails = customUserDetailsService.loadUserByUsername(email)
-            val authentication = UsernamePasswordAuthenticationToken(userDetails, null, userDetails.authorities)
-            authentication.details = WebAuthenticationDetailsSource().buildDetails(request)
-            SecurityContextHolder.getContext().authentication = authentication
+            val authenticationToken = UsernamePasswordAuthenticationToken(userDetails, null, userDetails.authorities)
+            authenticationToken.details = WebAuthenticationDetailsSource().buildDetails(request)
+            SecurityContextHolder.getContext().authentication = authenticationToken
         }
 
         filterChain.doFilter(request, response)
     }
 
-    fun getJwtFromRequest(request: HttpServletRequest): String? {
+    private fun getJwtFromRequest(request: HttpServletRequest): String? {
         val bearerToken = request.getHeader("Authorization")
 
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer")) {

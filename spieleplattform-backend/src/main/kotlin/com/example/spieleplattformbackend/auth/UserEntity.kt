@@ -1,11 +1,11 @@
-package com.example.spieleplattformbackend.user
+package com.example.spieleplattformbackend.auth
 
 import jakarta.persistence.*
 
 @Entity
-data class User(
+data class UserEntity(
     @Column(unique = true)
-    var username: String,
+    var email: String,
     var password: String,
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
