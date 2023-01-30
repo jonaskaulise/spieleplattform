@@ -16,11 +16,16 @@ export default function AllGamesPage() {
     const [searchParams, setSearchParams] = useSearchParams()
     const gameConsoleIdValue = Number(searchParams.get('gameConsoleId'))
     const gameConsoleId = isNaN(gameConsoleIdValue) ? 0 : gameConsoleIdValue
+    const nameSearchValue = searchParams.get('nameSearch')
+    const nameSearch = nameSearchValue == null ? "" : nameSearchValue.toString()
 
     useEffect(() => {
         if (gameConsoleId === 0)
-            setSearchParams({})
-        const gamesApiPath = "/games" + ((gameConsoleId !== 0) ? "?gameConsoleId=" + gameConsoleId : "")
+            searchParams.delete('gameConsoleId')
+        if (nameSearch === "") {
+            searchParams.delete('nameSearch')
+        }
+        setSearchParams(searchParams)
 
         axios.get("/gameConsoles")
             .then((response) => {
@@ -30,33 +35,46 @@ export default function AllGamesPage() {
                 setErrorStatus(error.response.status)
             })
 
-        axios.get(gamesApiPath)
+        axios.get(`/games?gameConsoleId=${gameConsoleId}&nameSearch=${nameSearch}`)
             .then((response) => {
                 setGames(response.data)
             })
             .catch(error => {
                 setErrorStatus(error.response.status)
             })
-    }, [gameConsoleId, setSearchParams])
+    }, [gameConsoleId, nameSearch, searchParams, setSearchParams])
 
     if (errorStatus)
         return errorStatus === 404 ? <Error404Page/> : <ErrorPage/>
     return games && gameConsoles && (
         <>
-            <form className="filter-form">
+            <form className="filter-form" onSubmit={event => event.preventDefault()}>
+
                 <select name="gameConsoles" id="gameConsoles" value={gameConsoleId} onChange={e => {
                     const value = e.target.value
                     if (value === "0")
-                        setSearchParams({})
+                        searchParams.delete('gameConsoleId')
                     else
-                        setSearchParams({'gameConsoleId': value})
+                        searchParams.set('gameConsoleId', value)
+                    setSearchParams(searchParams)
                 }}>
                     <option value="0" key="0">no filter</option>
                     {gameConsoles.map(gameConsole =>
                         <option value={gameConsole.id} key={gameConsole.id}>{gameConsole.name}</option>
                     )}
                 </select>
+
+                <input type="text" name="nameSearch" defaultValue={nameSearch} placeholder="search" onChange={e => {
+                    const value = e.target.value
+                    if (value === "")
+                        searchParams.delete('nameSearch')
+                    else
+                        searchParams.set('nameSearch', value)
+                    setSearchParams(searchParams)
+                }}/>
+
             </form>
+
             <div className="flex-container">
                 {games.map(game =>
                     <GameComponent
