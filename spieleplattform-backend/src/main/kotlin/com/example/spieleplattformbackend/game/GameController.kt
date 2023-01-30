@@ -12,11 +12,18 @@ import org.springframework.web.server.ResponseStatusException
 class GameController(@Autowired var gameService: GameService) {
 
     @GetMapping("/games")
-    fun gamesOfGameConsoleId(@RequestParam(required = false, defaultValue = "0") gameConsoleId: Int): Iterable<Game> {
-        return if (gameConsoleId == 0)
+    fun gamesOfGameConsoleId(
+        @RequestParam(required = false, defaultValue = "0") gameConsoleId: Int,
+        @RequestParam(required = false, defaultValue = "") nameSearch: String
+    ): Iterable<Game> {
+        return if (gameConsoleId == 0 && nameSearch == "")
             gameService.getAllGames()
-        else
+        else if (gameConsoleId != 0 && nameSearch == "")
             gameService.getGamesByGameConsoleId(gameConsoleId)
+        else if (gameConsoleId == 0)
+            gameService.getGamesByNameSearch(nameSearch)
+        else
+            gameService.getGamesByConsoleIdAndNameSearch(gameConsoleId, nameSearch)
     }
 
     @GetMapping("/games/{id}")
