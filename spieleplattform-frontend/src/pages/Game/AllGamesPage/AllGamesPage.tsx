@@ -14,7 +14,7 @@ export default function AllGamesPage() {
 
     const [searchParams, setSearchParams] = useSearchParams()
     const gameConsoleIdValue = Number(searchParams.get('gameConsoleId'))
-    const gameConsoleId = isNaN(gameConsoleIdValue) ? 0 : gameConsoleIdValue
+    const gameConsoleId = isNaN(gameConsoleIdValue) ? -1 : gameConsoleIdValue
     const nameSearchValue = searchParams.get('nameSearch')
     const nameSearch = nameSearchValue == null ? "" : nameSearchValue.toString()
 
@@ -38,7 +38,7 @@ export default function AllGamesPage() {
 
     function onSelectGameConsoleChange(event: ChangeEvent<HTMLSelectElement>) {
         const value = event.target.value
-        if (value === "0") {
+        if (value === "-1") {
             searchParams.delete('gameConsoleId')
         } else {
             searchParams.set('gameConsoleId', value)
@@ -64,7 +64,7 @@ export default function AllGamesPage() {
             <form className="filter-form" onSubmit={event => event.preventDefault()}>
 
                 <select name="gameConsoles" id="gameConsoles" value={gameConsoleId} onChange={onSelectGameConsoleChange}>
-                    <option value="0" key="0">no filter</option>
+                    <option value="-1" key="-1">no filter</option>
                     {gameConsoles.map(gameConsole =>
                         <option value={gameConsole.id} key={gameConsole.id}>{gameConsole.name}</option>
                     )}
