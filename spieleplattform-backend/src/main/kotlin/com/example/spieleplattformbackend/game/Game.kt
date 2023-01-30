@@ -11,8 +11,12 @@ class Game(
     var name: String,
     var releaseDate: LocalDate,
     var developer: String,
-    @Column(length = 10000)
+    @Column(length = 65535)
+    var description: String,
+    @Column(length = 65535)
     var imgUrl: String,
+    @Column(length = 65535)
+    var trailerUrl: String,
     @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.MERGE])
     @JsonManagedReference
     var gameConsoles: MutableList<GameConsole> = mutableListOf(),
