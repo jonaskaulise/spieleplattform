@@ -1,12 +1,11 @@
 import Game from "../Game";
 import GameConsole from "../GameConsole";
-import {useEffect, useState} from "react";
+import {ChangeEvent, useEffect, useState} from "react";
 import axios from "axios";
 import GameComponent from "../GameComponent/GameComponent";
 import "./AllGamesPage.scss"
-import Error404Page from "../../Error/Error404Page";
-import ErrorPage from "../../Error/ErrorPage";
 import {useSearchParams} from "react-router-dom";
+import Error from "../../Error/Error";
 
 export default function AllGamesPage() {
     const [games, setGames] = useState<Game[] | null>(null)
@@ -20,8 +19,9 @@ export default function AllGamesPage() {
     const nameSearch = nameSearchValue == null ? "" : nameSearchValue.toString()
 
     useEffect(() => {
-        if (gameConsoleId === 0)
+        if (gameConsoleId === 0) {
             searchParams.delete('gameConsoleId')
+        }
         if (nameSearch === "") {
             searchParams.delete('nameSearch')
         }
@@ -35,7 +35,7 @@ export default function AllGamesPage() {
                 setErrorStatus(error.response.status)
             })
 
-        axios.get(`/games?gameConsoleId=${gameConsoleId}&nameSearch=${nameSearch}`)
+        axios.get('/games', {params: searchParams})
             .then((response) => {
                 setGames(response.data)
             })
@@ -44,34 +44,41 @@ export default function AllGamesPage() {
             })
     }, [gameConsoleId, nameSearch, searchParams, setSearchParams])
 
-    if (errorStatus)
-        return errorStatus === 404 ? <Error404Page/> : <ErrorPage/>
+    function onSelectGameConsoleChange(event: ChangeEvent<HTMLSelectElement>) {
+        const value = event.target.value
+        if (value === "0") {
+            searchParams.delete('gameConsoleId')
+        } else {
+            searchParams.set('gameConsoleId', value)
+        }
+        setSearchParams(searchParams)
+    }
+
+    function onInputNameSearchChange(event: ChangeEvent<HTMLInputElement>) {
+        const value = event.target.value
+        if (value === "") {
+            searchParams.delete('nameSearch')
+        } else {
+            searchParams.set('nameSearch', value)
+        }
+        setSearchParams(searchParams)
+    }
+
+    if (errorStatus) {
+        return <Error message={"Error " + errorStatus}></Error>
+    }
     return games && gameConsoles && (
         <>
             <form className="filter-form" onSubmit={event => event.preventDefault()}>
 
-                <select name="gameConsoles" id="gameConsoles" value={gameConsoleId} onChange={e => {
-                    const value = e.target.value
-                    if (value === "0")
-                        searchParams.delete('gameConsoleId')
-                    else
-                        searchParams.set('gameConsoleId', value)
-                    setSearchParams(searchParams)
-                }}>
+                <select name="gameConsoles" id="gameConsoles" value={gameConsoleId} onChange={onSelectGameConsoleChange}>
                     <option value="0" key="0">no filter</option>
                     {gameConsoles.map(gameConsole =>
                         <option value={gameConsole.id} key={gameConsole.id}>{gameConsole.name}</option>
                     )}
                 </select>
 
-                <input type="text" name="nameSearch" defaultValue={nameSearch} placeholder="search" onChange={e => {
-                    const value = e.target.value
-                    if (value === "")
-                        searchParams.delete('nameSearch')
-                    else
-                        searchParams.set('nameSearch', value)
-                    setSearchParams(searchParams)
-                }}/>
+                <input type="text" name="nameSearch" defaultValue={nameSearch} placeholder="search" onChange={onInputNameSearchChange}/>
 
             </form>
 
