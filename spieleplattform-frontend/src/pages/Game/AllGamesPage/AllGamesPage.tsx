@@ -19,14 +19,6 @@ export default function AllGamesPage() {
     const nameSearch = nameSearchValue == null ? "" : nameSearchValue.toString()
 
     useEffect(() => {
-        // if (gameConsoleId === 0) {
-        //     searchParams.delete('gameConsoleId')
-        // }
-        // if (nameSearch === "") {
-        //     searchParams.delete('nameSearch')
-        // }
-        // setSearchParams(searchParams)
-
         axios.get("/gameConsoles")
             .then((response) => {
                 setGameConsoles(response.data)
@@ -42,7 +34,7 @@ export default function AllGamesPage() {
             .catch(error => {
                 setErrorStatus(error.response.status)
             })
-    }, [gameConsoleId, nameSearch])
+    }, [searchParams])
 
     function onSelectGameConsoleChange(event: ChangeEvent<HTMLSelectElement>) {
         const value = event.target.value

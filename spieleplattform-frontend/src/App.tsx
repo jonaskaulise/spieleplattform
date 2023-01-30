@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.scss';
-import {NavLink, Route, Routes, useLocation} from "react-router-dom";
+import {NavLink, Route, Routes} from "react-router-dom";
 import GameLayoutPage from "./pages/Game/GameLayoutPage";
 import GamePage from "./pages/Game/GamePage/GamePage";
 import HomePage from "./pages/HomePage";
@@ -14,8 +14,6 @@ library.add(fas)
 
 function App() {
     const {keycloak} = useKeycloak()
-    const location = useLocation()
-    console.log(location)
     return (
         <>
             <nav>
