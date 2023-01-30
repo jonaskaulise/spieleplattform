@@ -10,13 +10,14 @@ export default function GameComponent({name, developer, releaseDate, imgUrl, id}
             <div className="flip-card" onClick={() => navigate(path)}>
                 <div className="flip-card-inner">
                     <div className="flip-card-front">
-                        <img
-                            src={imgUrl} alt={name}/>
+                        <img src={imgUrl} alt={name}/>
                     </div>
                     <div className="flip-card-back">
-                        <h1>{name}</h1>
-                        <p>{developer}</p>
-                        <p>{releaseDate.toString()}</p>
+                        <div>
+                            <h1>{name}</h1>
+                            <p>{developer}</p>
+                            <p>{releaseDate.toString()}</p>
+                        </div>
                     </div>
                 </div>
             </div>
