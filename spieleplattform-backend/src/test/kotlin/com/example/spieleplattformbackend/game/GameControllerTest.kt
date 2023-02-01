@@ -1,5 +1,6 @@
 package com.example.spieleplattformbackend.game
 
+import com.example.spieleplattformbackend.auth.AuthService
 import com.example.spieleplattformbackend.gameConsole.GameConsoleService
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
@@ -20,6 +21,9 @@ class GameControllerTest(@Autowired val mockMvc: MockMvc) {
 
     @MockkBean
     lateinit var gameConsoleService: GameConsoleService
+
+    @MockkBean
+    lateinit var authService: AuthService
 
     val game = Game(
         "Minecraft",
@@ -75,7 +79,7 @@ class GameControllerTest(@Autowired val mockMvc: MockMvc) {
     @Test
     fun when_gamesOfGameConsoleId_withGameConsoleId_1_withNameSearch_m() {
         //given
-        every { gameService.getGamesByConsoleIdAndNameSearch(1, "m") } returns mutableListOf(game)
+        every { gameService.getGamesByOptionalGameConsoleIdAndNameSearch(1, "m") } returns mutableListOf(game)
 
         //when//then
         mockMvc.get("/games?gameConsoleId=1&nameSearch=m")

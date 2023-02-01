@@ -6,11 +6,13 @@ import GameComponent from "../GameComponent/GameComponent";
 import "./AllGamesPage.scss"
 import {useSearchParams} from "react-router-dom";
 import Error from "../../Error/Error";
+import {useKeycloak} from "@react-keycloak/web";
 
 export default function AllGamesPage() {
     const [games, setGames] = useState<Game[] | null>(null)
     const [gameConsoles, setGameConsoles] = useState<GameConsole[] | null>(null)
     const [errorStatus, setErrorStatus] = useState(null)
+    const {keycloak} = useKeycloak()
 
     const [searchParams, setSearchParams] = useSearchParams()
     const gameConsoleIdValue = Number(searchParams.get('gameConsoleId'))
@@ -27,7 +29,7 @@ export default function AllGamesPage() {
                 setErrorStatus(error.response.status)
             })
 
-        axios.get('/games', {params: searchParams})
+        axios.get('/games', {headers: { 'Authorization': `Bearer ${keycloak.token}`}, params: searchParams})
             .then((response) => {
                 setGames(response.data)
             })

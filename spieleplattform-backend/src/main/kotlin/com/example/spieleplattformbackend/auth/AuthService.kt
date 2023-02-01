@@ -19,25 +19,23 @@ class AuthService(
     val authenticationManager: AuthenticationManager,
     val jwtTokenProvider: JwtTokenProvider
 ) {
-    fun registration(registerDto: RegisterDto): ResponseEntity<String> {
+    fun registration(registerDto: RegisterDto) {
         if (userRepository.existsByEmail(registerDto.email)) {
-            return ResponseEntity("Email-address is already taken", HttpStatus.CONFLICT)
+            throw Exception("Email-address is already taken")
         }
         val user = UserEntity(
             registerDto.email,
             passwordEncoder.encode(registerDto.password)
         )
         userRepository.save(user)
-
-        return ResponseEntity(HttpStatus.OK)
     }
 
-    fun login(loginDto: LoginDto): ResponseEntity<LoginResponseDto> {
+    fun login(loginDto: LoginDto): LoginResponseDto {
         val authenticationToken = UsernamePasswordAuthenticationToken(loginDto.email, loginDto.password)
         val authentication = authenticationManager.authenticate(authenticationToken)
         SecurityContextHolder.getContext().authentication = authentication
         val jwtToken = jwtTokenProvider.generateToken(authentication.name)
 
-        return ResponseEntity(LoginResponseDto(jwtToken), HttpStatus.OK)
+        return LoginResponseDto(jwtToken)
     }
 }

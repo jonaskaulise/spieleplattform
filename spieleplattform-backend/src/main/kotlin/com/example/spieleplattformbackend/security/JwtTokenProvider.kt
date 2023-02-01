@@ -35,7 +35,7 @@ class JwtTokenProvider {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token)
             true
         } catch (e: JwtException) {
-            print("Json-web-token not valid!")
+            print("Json-web-token is not valid!")
             false
         }
     }
