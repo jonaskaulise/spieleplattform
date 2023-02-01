@@ -35,20 +35,29 @@ nav {
     }
 
     div {
-      button {
-        background-color: cadetblue;
-        border: none;
+      .sign-up, .sign-in-out {
         border-radius: 5px;
         height: 40px;
-        margin: 5px 0 5px 0;
+        margin: 5px 0 5px 5px;
         text-align: center;
         font-size: 20px;
         padding: 0 15px 0 15px;
+        border: solid 2px cadetblue;
+        cursor: pointer;
+      }
+
+      .sign-up {
+        background-color: transparent;
+        color: cadetblue;
+      }
+
+      .sign-in-out {
+        background-color: cadetblue;
         color: white;
       }
 
-      button:hover {
-        background-color: dodgerblue;
+      .sign-up:hover, .sign-in-out:hover {
+        box-shadow: 0 0 3px 0 gray;
       }
     }
   }
