@@ -1,16 +1,17 @@
 import './App.scss';
 import {Route, Routes} from "react-router-dom";
-import GameLayoutPage from "./pages/Game/GameLayoutPage";
-import GamePage from "./pages/Game/GamePage/GamePage";
-import HomePage from "./pages/HomePage";
-import AllGamesPage from "./pages/Game/AllGamesPage/AllGamesPage";
-import Error from "./pages/Error/Error";
+import GameLayoutPage from "./components/Game/GameLayoutPage";
+import GamePage from "./components/Game/GamePage/GamePage";
+import HomePage from "./components/HomePage";
+import AllGamesPage from "./components/Game/AllGamesPage/AllGamesPage";
+import Error from "./components/Error/Error";
 import {fas} from '@fortawesome/free-solid-svg-icons'
+import {far} from '@fortawesome/free-regular-svg-icons'
 import {library} from "@fortawesome/fontawesome-svg-core";
 import PrivateRoute from "./Keycloak/PrivateRoute";
-import Navigation from "./pages/Navigation/Navigation";
+import Navigation from "./components/Navigation/Navigation";
 
-library.add(fas)
+library.add(fas, far)
 
 function App() {
     return (
