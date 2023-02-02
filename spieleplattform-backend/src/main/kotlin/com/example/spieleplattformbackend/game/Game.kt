@@ -30,7 +30,7 @@ data class Game(
     override fun toString(): String {
         var gameString = "Name: $name \r\nDeveloper: $developer \r\nRelease date: $releaseDate \r\n"
         for (rating in ratings) {
-            gameString += "${rating.ratingValue}, ${rating.comment}\r\n"
+            gameString += "${rating.graphicRating}, ${rating.soundRating}, ${rating.addictionRating}, ${rating.actionRating}, ${rating.comment}, ${rating.username}\r\n"
         }
         return gameString
     }
