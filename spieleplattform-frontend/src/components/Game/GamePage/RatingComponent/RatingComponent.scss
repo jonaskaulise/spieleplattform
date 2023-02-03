@@ -1,0 +1,19 @@
+.rating-component {
+  background-color: #dddddd;
+  margin-top: 25px;
+  padding: 10px;
+  font-size: 22px;
+
+  table {
+    border-collapse: collapse;
+    margin-top: 10px;
+    
+    .key {
+      width: 110px;
+    }
+  }
+
+  .rating-comment {
+    margin-top: 10px;
+  }
+}

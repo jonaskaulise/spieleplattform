@@ -1,0 +1,27 @@
+.flex-container {
+    padding: 0 25px 25px 25px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.filter-form {
+    padding: 0 50px 0 50px;
+
+    select, input {
+        height: 25px;
+        font-size: 15px;
+        border: 1px black solid;
+        border-radius: 5px;
+        color: black;
+        margin: 25px 25px 0 0;
+    }
+
+    input {
+        padding: 0 5px 0 5px
+    }
+}
+
+.flex-container, .filter-form {
+    margin: auto;
+    max-width: 1200px;
+}
