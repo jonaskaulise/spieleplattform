@@ -3,12 +3,7 @@ import "./StarComponent.scss"
 
 export default function StarComponent(starProps: {count: number}) {
 
-    const stars = []
-    for(let index = 0; index < starProps.count; index++) {
-        stars.push(
-            <FontAwesomeIcon icon={["fas", "star"]} size={"2x"} color="cadetblue" key={index}/>
-        )
-    }
+    const stars = Array.from({ length: starProps.count }, (_, index) => <FontAwesomeIcon icon={["fas", "star"]} size={"2x"} key={index} />)
 
     return (
         <div className="star-component">
