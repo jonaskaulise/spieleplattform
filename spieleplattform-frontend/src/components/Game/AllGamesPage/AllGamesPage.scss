@@ -1,11 +1,10 @@
 .flex-container {
-    padding: 0 25px 25px 25px;
     display: flex;
     flex-wrap: wrap;
 }
 
 .filter-form {
-    padding: 0 50px 0 50px;
+    padding: 0 25px 0 25px;
 
     select, input {
         height: 25px;

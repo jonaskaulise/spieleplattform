@@ -9,7 +9,7 @@ import org.springframework.web.server.ResponseStatusException
 @RequestMapping("/games")
 class GameController(@Autowired var gameService: GameService) {
 
-    @GetMapping("")
+    @GetMapping
     fun gamesByConsoleIdAndNameSearch(
         @RequestParam(required = false, defaultValue = "") gameConsoleId: Int?,
         @RequestParam(required = false, defaultValue = "") nameSearch: String

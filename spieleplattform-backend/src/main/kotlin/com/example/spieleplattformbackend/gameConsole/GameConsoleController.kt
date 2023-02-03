@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/gameConsoles")
 class GameConsoleController(@Autowired var gameConsoleService: GameConsoleService) {
 
-    @GetMapping("")
+    @GetMapping
     fun gameConsoles(): Iterable<GameConsole> {
         return gameConsoleService.getGameConsoles()
     }
