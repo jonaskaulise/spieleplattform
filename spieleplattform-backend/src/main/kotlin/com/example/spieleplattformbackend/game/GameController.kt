@@ -2,16 +2,14 @@ package com.example.spieleplattformbackend.game
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 
 @RestController
+@RequestMapping("/games")
 class GameController(@Autowired var gameService: GameService) {
 
-    @GetMapping("/games")
+    @GetMapping("")
     fun gamesOfGameConsoleId(
         @RequestParam(required = false, defaultValue = "0") gameConsoleId: Int,
         @RequestParam(required = false, defaultValue = "") nameSearch: String
@@ -26,7 +24,7 @@ class GameController(@Autowired var gameService: GameService) {
             gameService.getGamesByConsoleIdAndNameSearch(gameConsoleId, nameSearch)
     }
 
-    @GetMapping("/games/{id}")
+    @GetMapping("/{id}")
     fun game(@PathVariable id: Int): Game {
         return gameService.getGameById(id)
             ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)

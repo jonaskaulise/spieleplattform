@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference
 import jakarta.persistence.*
 
 @Entity
-class GameConsole(
+data class GameConsole(
     var name: String,
     @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.MERGE], mappedBy = "gameConsoles")
     @JsonBackReference

@@ -4,7 +4,7 @@ import com.example.spieleplattformbackend.gameConsole.GameConsole
 import com.example.spieleplattformbackend.gameConsole.GameConsoleRepository
 import com.example.spieleplattformbackend.rating.Rating
 import com.example.spieleplattformbackend.rating.RatingRepository
-import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
@@ -12,9 +12,9 @@ import java.time.LocalDate
 
 @Service
 class GameService(
-    @Autowired val gameRepository: GameRepository,
-    @Autowired val ratingRepository: RatingRepository,
-    @Autowired val gameConsoleRepository: GameConsoleRepository
+    val gameRepository: GameRepository,
+    val ratingRepository: RatingRepository,
+    val gameConsoleRepository: GameConsoleRepository
 ) {
     fun insertExampleData() {
         //consoles
@@ -212,6 +212,8 @@ class GameService(
                 ratingRepository.save(rating)
             }
         }
+
+        print("Example data created in database")
     }
 
     fun printGameWithName(name: String) {
@@ -219,9 +221,9 @@ class GameService(
         println(game.toString())
     }
 
-    fun getGamesCount(): Long = gameRepository.countByIdNotNull()
+    fun getGamesCount(): Long = gameRepository.count()
 
-    fun findFirstGameStartingWithM(): Game? = gameRepository.findFirstByNameStartingWith("M")
+    fun getFirstGameStartingWithM(): Game? = gameRepository.findFirstByNameStartingWith("M")
 
     fun findDevelopersStartingWithRorN(): List<String> {
         val games = gameRepository.findAllByDeveloperStartingWithOrDeveloperStartingWith("R", "N")
@@ -230,7 +232,7 @@ class GameService(
     }
 
     fun getGameById(id: Int): Game? {
-        return gameRepository.findGameById(id)
+        return gameRepository.findByIdOrNull(id)
     }
 
     fun getAllGames(): Iterable<Game> {
@@ -239,7 +241,7 @@ class GameService(
 
     fun getGamesByGameConsoleId(id: Int): Iterable<Game> {
         val gameConsole =
-            gameConsoleRepository.findGameConsoleById(id) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
+            gameConsoleRepository.findByIdOrNull(id) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
         return gameRepository.findGamesByGameConsolesContains(gameConsole)
     }
 
@@ -249,7 +251,7 @@ class GameService(
 
     fun getGamesByConsoleIdAndNameSearch(consoleId: Int, nameSearch: String): Iterable<Game> {
         val gameConsole =
-            gameConsoleRepository.findGameConsoleById(consoleId) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
+            gameConsoleRepository.findByIdOrNull(consoleId) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
         return gameRepository.findGamesByGameConsolesContainsAndNameContainsIgnoreCase(gameConsole, nameSearch)
     }
 }

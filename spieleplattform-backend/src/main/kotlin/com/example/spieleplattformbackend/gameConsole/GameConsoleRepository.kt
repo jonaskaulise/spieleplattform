@@ -4,6 +4,4 @@ import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface GameConsoleRepository : CrudRepository<GameConsole, Int> {
-    fun findGameConsoleById(id: Int): GameConsole?
-}
+interface GameConsoleRepository : CrudRepository<GameConsole, Int> {}
