@@ -6,26 +6,54 @@ import GamePage from "./pages/Game/GamePage/GamePage";
 import HomePage from "./pages/HomePage";
 import AllGamesPage from "./pages/Game/AllGamesPage/AllGamesPage";
 import Error from "./pages/Error/Error";
-import { fas } from '@fortawesome/free-solid-svg-icons'
+import {fas} from '@fortawesome/free-solid-svg-icons'
 import {library} from "@fortawesome/fontawesome-svg-core";
+import {useKeycloak} from "@react-keycloak/web";
+
 library.add(fas)
 
 function App() {
+    const {keycloak} = useKeycloak()
     return (
         <>
             <nav>
-                <ul>
-                    <li>
-                        <NavLink className={({ isActive}) => {
-                            return isActive ? "is-active" : ""
-                        }} to="/">Home</NavLink>
-                    </li>
-                    <li>
-                        <NavLink reloadDocument className={({ isActive}) => {
-                            return isActive ? "is-active" : ""
-                        }} to="/games">Games</NavLink>
-                    </li>
-                </ul>
+                <div className="flex-container">
+                    <ul>
+                        <li>
+                            <NavLink className={({isActive}) => {
+                                return isActive ? "is-active" : "";
+                            }} to="/">Home</NavLink>
+                        </li>
+                        <li>
+                            <NavLink reloadDocument className={({isActive}) => { //reloadDocument
+                                return isActive ? "is-active" : "";
+                            }} to="/games">Games</NavLink>
+                        </li>
+                    </ul>
+
+                    <div className="align-right">
+                        {!keycloak.authenticated && (
+                            <button
+                                type="button"
+                                className="text-blue-800"
+                                onClick={() => keycloak.login()}
+                            >
+                                Login
+                            </button>
+                        )}
+
+                        {!!keycloak.authenticated && (
+                            <button
+                                type="button"
+                                className="text-blue-800"
+                                onClick={() => keycloak.logout()}
+                            >
+                                Logout {keycloak.tokenParsed?.preferred_username}
+                            </button>
+                        )}
+                    </div>
+                </div>
+
             </nav>
             <Routes>
                 <Route path="/" element={<HomePage/>}/>
