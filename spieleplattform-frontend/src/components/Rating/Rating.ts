@@ -1,10 +1,10 @@
 export default interface Rating {
-    graphicRating: number;
-    soundRating: number;
-    addictionRating: number;
-    actionRating: number;
+    graphicRating: number
+    soundRating: number
+    addictionRating: number
+    actionRating: number
 
-    username: string;
-    comment: string;
-    id: number;
+    username: string
+    comment: string
+    id: number
 }
