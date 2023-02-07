@@ -1,10 +1,10 @@
 import Game from "../Game";
 import GameConsole from "../GameConsole";
-import {ChangeEvent, useEffect, useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import axios from "axios";
 import GameComponent from "../GameComponent/GameComponent";
 import "./AllGamesPage.scss"
-import {useSearchParams} from "react-router-dom";
+import {Link, useSearchParams} from "react-router-dom";
 import Error from "../../Error/Error";
 import {useKeycloak} from "@react-keycloak/web";
 
@@ -38,6 +38,10 @@ export default function AllGamesPage() {
             })
     }, [searchParams])
 
+    function isAuthor(): boolean {
+        return !!keycloak.tokenParsed?.realm_access?.roles.includes("author");
+    }
+
     function onSelectGameConsoleChange(event: ChangeEvent<HTMLSelectElement>) {
         const value = event.target.value
         if (value === "-1") {
@@ -63,7 +67,7 @@ export default function AllGamesPage() {
     }
     return games && gameConsoles && (
         <>
-            <form className="filter-form" onSubmit={event => event.preventDefault()}>
+            <div className="filter-form" onSubmit={event => event.preventDefault()}>
 
                 <select name="gameConsoles" id="gameConsoles" value={gameConsoleId} onChange={onSelectGameConsoleChange}>
                     <option value="-1" key="-1">no filter</option>
@@ -74,7 +78,11 @@ export default function AllGamesPage() {
 
                 <input type="text" name="nameSearch" defaultValue={nameSearch} placeholder="search" onChange={onInputNameSearchChange}/>
 
-            </form>
+                {isAuthor() &&
+                    <Link className="add-game-button" to="/games/add">Add Game</Link>
+                }
+
+            </div>
 
             <div className="flex-container">
                 {games.map(game =>

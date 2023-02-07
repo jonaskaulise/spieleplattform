@@ -6,17 +6,19 @@ import './Navigation.scss';
 function Navigation() {
     const {keycloak} = useKeycloak()
 
+
+
     return (
         <nav>
             <div className="flex-container">
                 <ul>
                     <li>
-                        <NavLink className={({isActive}) => 
+                        <NavLink className={({isActive}) =>
                             isActive ? "is-active" : ""
                         } to="/">Home</NavLink>
                     </li>
                     <li>
-                        <NavLink reloadDocument className={({isActive}) => 
+                        <NavLink className={({isActive}) =>
                             isActive ? "is-active" : ""
                         } to="/games">Games</NavLink>
                     </li>
