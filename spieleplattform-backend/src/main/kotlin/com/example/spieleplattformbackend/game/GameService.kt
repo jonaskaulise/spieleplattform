@@ -296,4 +296,23 @@ class GameService(
         gameRepository.save(game)
         return game
     }
+
+    fun updateGame(id: Int, gameDTO: GameDTO): Game {
+        val user = userService.getCurrentUser() ?: throw Exception("User doesn't exist.")
+        val game = gameRepository.findByIdOrNull(id) ?: throw Exception("Game with given id doesn't exist.")
+        if (game.authorUsername != user.username) throw Exception("User is not allowed to update Game.")
+        val gameConsoles = gameConsoleService.getGameConsolesByGameConsoleIds(gameDTO.gameConsoleIds)
+            ?: throw Exception("At least on Console doesn't exist.")
+
+        game.name = gameDTO.name
+        game.releaseDate = gameDTO.releaseDate
+        game.developer = gameDTO.developer
+        game.description = gameDTO.description
+        game.imageUrl = gameDTO.imageUrl
+        game.youtubeId = gameDTO.youtubeId
+        game.gameConsoles = gameConsoles
+
+        gameRepository.save(game)
+        return game
+    }
 }

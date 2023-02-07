@@ -32,4 +32,13 @@ class GameController(@Autowired var gameService: GameService) {
             throw ResponseStatusException(HttpStatus.BAD_REQUEST, exception.message)
         }
     }
+
+    @PutMapping("/{id}")
+    fun updateGame(@PathVariable id: Int, @RequestBody gameDTO: GameDTO): Game {
+        try {
+            return gameService.updateGame(id, gameDTO)
+        } catch (exception: Exception) {
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, exception.message)
+        }
+    }
 }
