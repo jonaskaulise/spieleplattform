@@ -1,4 +1,4 @@
-import "./AddGame.scss"
+import "./AddOrEditGame.scss"
 import "react-datepicker/dist/react-datepicker.min.css";
 import DatePicker from "react-datepicker";
 import { useEffect, useState } from "react";
@@ -6,32 +6,49 @@ import GameConsole from "../GameConsole";
 import axios from "axios";
 import { useKeycloak } from "@react-keycloak/web";
 import Error from "../../Error/Error";
-import AddGameDTO from "../AddGameDTO";
+import GameDTO from "../GameDTO";
 import Game from "../Game";
 
-export default function AddGame() {
+
+interface AddOrEditGameProps {
+    title: string,
+    game: Game,
+    submitFunction: (gameDTO: GameDTO) => void
+}
+export default function AddOrEditGame(props: AddOrEditGameProps) {
     const [gameConsoles, setGameConsoles] = useState<GameConsole[] | null>(null)
-    const [gameConsoleSelectedFlags, setGameConsoleSelectedFlags] = useState<Boolean[]>(new Array(0))
+    const [gameConsoleSelectedFlags, setGameConsoleSelectedFlags] = useState<boolean[]>(new Array(0))
     const [errorStatus, setErrorStatus] = useState(null)
     const { keycloak } = useKeycloak()
 
-    const [name, setName] = useState<string>("")
-    const [developer, setDeveloper] = useState<string>("")
-    const [releaseDate, setReleaseDate] = useState<Date>(new Date())
-    const [imageUrl, setImageUrl] = useState<string>("")
-    const [youtubeId, setYoutubeId] = useState<string>("")
-    const [description, setDescription] = useState<string>("")
+    const [name, setName] = useState<string>(props.game.name)
+    const [developer, setDeveloper] = useState<string>(props.game.developer)
+    const [releaseDate, setReleaseDate] = useState<Date>(props.game.releaseDate)
+    const [imageUrl, setImageUrl] = useState<string>(props.game.imageUrl)
+    const [youtubeId, setYoutubeId] = useState<string>(props.game.youtubeId)
+    const [description, setDescription] = useState<string>(props.game.description)
 
     useEffect(() => {
         axios.get("/gameConsoles", { headers: { 'Authorization': `Bearer ${keycloak.token}` } })
             .then((response) => {
                 setGameConsoles(response.data)
-                setGameConsoleSelectedFlags(Array(response.data.length).fill(false))
+                createGameConsolesSelectedFlags(response.data)
             })
             .catch(error => {
                 setErrorStatus(error.response.status)
             })
     }, [keycloak.token])
+
+    function createGameConsolesSelectedFlags(gameConsoles: GameConsole[]) {
+        const selectedFlags : boolean[] = Array(gameConsoles.length).fill(false)
+        const gameConsoleIds : number[] = props.game.gameConsoles.map((gameConsole) => gameConsole.id)
+        gameConsoles.forEach((gameConsole, index) => {
+            if (gameConsoleIds.includes(gameConsole.id)) {
+                selectedFlags[index] = true
+            }
+        })
+        setGameConsoleSelectedFlags(selectedFlags)
+    }
 
     function toggleGameConsoleSelectedFlag(index: number) {
         if (gameConsoleSelectedFlags == null) return
@@ -50,7 +67,7 @@ export default function AddGame() {
             }
         }
 
-        const addGameDTO: AddGameDTO = {
+        const gameDTO: GameDTO = {
             name: name,
             developer: developer,
             releaseDate: releaseDate,
@@ -60,18 +77,7 @@ export default function AddGame() {
             gameConsoleIds: gameConsoleIds
         }
 
-        console.log(addGameDTO)
-
-        axios.post<Game>(
-            "/games",
-            addGameDTO,
-            { headers: { 'Authorization': `Bearer ${keycloak.token}` } })
-            .then((game) => {
-
-            })
-            .catch(error => {
-                console.log(error)
-            })
+        props.submitFunction(gameDTO)
     }
 
     if (errorStatus) {
@@ -79,15 +85,15 @@ export default function AddGame() {
     }
     return gameConsoles && (
         <div className="add-game">
-            <h1>Add Game</h1>
-            <form className="add-game-form">
+            <h1>{props.title}</h1>
+            <form className="add-game-form" onSubmit={submitGame}>
                 <div className="add-game-input">
                     <label>Name:</label>
-                    <input type="text" onChange={(e) => setName(e.target.value)}/>
+                    <input type="text" value={name} onChange={(e) => setName(e.target.value)}/>
                 </div>
                 <div className="add-game-input">
                     <label>Developer:</label>
-                    <input type="text" onChange={(e) => setDeveloper(e.target.value)}/>
+                    <input type="text" value={developer} onChange={(e) => setDeveloper(e.target.value)}/>
                 </div>
                 <div className="add-game-input">
                     <label>Release date:</label>
@@ -97,15 +103,15 @@ export default function AddGame() {
                 </div>
                 <div className="add-game-input">
                     <label>Image Url:</label>
-                    <input type="text"  onChange={(e) => setImageUrl(e.target.value)}/>
+                    <input type="text" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)}/>
                 </div>
                 <div className="add-game-input">
                     <label>Youtube Id:</label>
-                    <input type="text"  onChange={(e) => setYoutubeId(e.target.value)}/>
+                    <input type="text" value={youtubeId} onChange={(e) => setYoutubeId(e.target.value)}/>
                 </div>
                 <div className="add-game-input">
                     <label>Description:</label>
-                    <textarea  onChange={(e) => setDescription(e.target.value)}/>
+                    <textarea value={description} onChange={(e) => setDescription(e.target.value)}/>
                 </div>
                 <div className="add-game-input">
                     <label>Game consoles:</label>
@@ -123,7 +129,7 @@ export default function AddGame() {
                     </div>
                 </div>
                 <div className="add-game-button-container">
-                    <button className="sign-in-out-button" onClick={submitGame}>Add game</button>
+                    <button type="submit" className="sign-in-out-button">{props.title}</button>
                 </div>
             </form>
         </div>

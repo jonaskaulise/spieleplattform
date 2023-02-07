@@ -90,7 +90,7 @@ export default function AllGamesPage() {
                         key={game.id}
                         id={game.id}
                         name={game.name}
-                        author={game.author}
+                        authorUsername={game.authorUsername}
                         releaseDate={game.releaseDate}
                         developer={game.developer}
                         description={game.description}

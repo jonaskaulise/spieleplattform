@@ -1,4 +1,4 @@
-export default interface AddGameDTO {
+export default interface GameDTO {
     name: string
     developer: string
     releaseDate: Date

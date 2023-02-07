@@ -22,6 +22,16 @@ export default function GamePage() {
         height: '100%'
     };
 
+    useEffect(() => {
+        axios.get("/games/" + id, { headers: { 'Authorization': `Bearer ${keycloak.token}` } })
+            .then((response) => {
+                setGame(response.data)
+            })
+            .catch(error => {
+                setErrorStatus(error.response.status);
+            })
+    }, [id])
+
     function submitRatingDTO(ratingDTO: RatingDTO) {
         if (game === null) return
 
@@ -50,16 +60,6 @@ export default function GamePage() {
 
         return false
     }
-
-    useEffect(() => {
-        axios.get("/games/" + id, { headers: { 'Authorization': `Bearer ${keycloak.token}` } })
-            .then((response) => {
-                setGame(response.data)
-            })
-            .catch(error => {
-                setErrorStatus(error.response.status);
-            })
-    }, [id])
 
     if (errorStatus) {
         return <Error message={"Error " + errorStatus}></Error>
