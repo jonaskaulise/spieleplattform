@@ -14,7 +14,7 @@ data class Game(
     @Column(length = 65535)
     var description: String,
     @Column(length = 65535)
-    var imgUrl: String,
+    var imageUrl: String,
     @Column(length = 65535)
     var youtubeId: String,
     @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.MERGE])

@@ -278,7 +278,7 @@ class GameService(
             gameDTO.releaseDate,
             "${user.firstname} ${user.lastname}",
             gameDTO.description,
-            gameDTO.imgUrl,
+            gameDTO.imageUrl,
             gameDTO.youtubeId,
             gameConsoles
         )

@@ -1,0 +1,98 @@
+.add-game {
+    max-width: 1200px;
+    margin: auto;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+
+
+    .add-game-form {
+        background-color: #dddddd;
+        width: 100%;
+        padding: 10px;
+        margin-top: 25px;
+        border-radius: 5px;
+
+        .add-game-input {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+            width: 100%;
+
+            label, input {
+                line-height: 25px;
+                padding-top: 5px;
+            }
+    
+            label {
+                width: 170px;
+                font-size: 22px;
+            }
+
+            input, textarea {
+                flex: 1;
+                font-size: 20px;
+                border: 1px solid black;
+                border-radius: 5px;
+                padding: 5px;
+            }
+    
+            .add-game-datepicker {
+                padding: 0;
+                flex: auto;
+
+                input {
+                    width: 100%;
+                }
+            }
+
+            textarea {
+                height: 150px;
+                font-family: inherit;
+                resize: none;
+                min-width: 150px;
+            }
+
+            .add-game-game-consoles {
+                flex: 1;
+
+                ul {
+                    list-style: none;
+                    display: flex;
+                    flex-wrap: wrap;
+                    margin-bottom: -10px;
+    
+                    li {
+                        font-size: 20px;
+                        line-height: 25px;
+                        border: 1px solid black;
+                        border-radius: 5px;
+                        padding: 5px;
+                        margin-right: 10px;
+                        margin-bottom: 10px;
+                        cursor: pointer;
+                        user-select: none;
+                    }
+
+                    .game-console-selected {
+                        background-color: gray;
+                        color: white;
+                    }
+
+                    .game-console-unselected {
+                        background-color: white;
+                        color: black;
+                    }
+                }
+            }
+    
+        }
+
+        .add-game-button-container {
+            display: flex;
+            width: 100%;
+            justify-content: end;
+        }
+    }
+}

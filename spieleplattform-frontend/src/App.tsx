@@ -10,6 +10,8 @@ import {far} from '@fortawesome/free-regular-svg-icons'
 import {library} from "@fortawesome/fontawesome-svg-core";
 import PrivateRoute from "./Keycloak/PrivateRoute";
 import Navigation from "./components/Navigation/Navigation";
+import AddGame from './components/Game/AddGame/AddGame';
+import PrivateAuthorRoute from "./Keycloak/PrivateAuthorRoute";
 
 library.add(fas, far)
 
@@ -22,6 +24,7 @@ function App() {
                 <Route path="/games" element={<PrivateRoute><GameLayoutPage/></PrivateRoute>}>
                     <Route path="" element={<AllGamesPage/>}/>
                     <Route path=":id" element={<GamePage/>}/>
+                    <Route path="add" element={<PrivateAuthorRoute><AddGame/></PrivateAuthorRoute>}/>
                 </Route>
                 <Route path="/*" element={<Error message="Error 404"/>}/>
             </Routes>

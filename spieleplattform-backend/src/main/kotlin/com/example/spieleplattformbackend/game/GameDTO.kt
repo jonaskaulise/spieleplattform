@@ -6,7 +6,7 @@ data class GameDTO(
     var name: String,
     var releaseDate: LocalDate,
     var description: String,
-    var imgUrl: String,
+    var imageUrl: String,
     var youtubeId: String,
     var gameConsoleIds: MutableList<Int>
 ) {}

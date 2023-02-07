@@ -1,26 +1,44 @@
 .flex-container {
     display: flex;
     flex-wrap: wrap;
+    margin: auto;
 }
 
 .filter-form {
+    display: flex;
+    flex-direction: row;
     padding: 0 25px 0 25px;
+    margin: 25px auto 0 auto;
+
+    select, input, .add-game-button {
+        height: 30px;
+        font-size: 18px;
+        border-radius: 5px;
+    }
 
     select, input {
-        height: 25px;
-        font-size: 15px;
         border: 1px black solid;
-        border-radius: 5px;
         color: black;
-        margin: 25px 25px 0 0;
+        margin-right: 10px;
     }
 
     input {
         padding: 0 5px 0 5px
     }
+
+    .add-game-button {
+        text-decoration: none;
+        color: white;
+        background-color: cadetblue;
+        line-height: 30px;
+        padding: 0 10px 0 10px;
+    }
+
+    .add-game-button:hover {
+        box-shadow: 0 0 3px 0 gray;
+    }
 }
 
 .flex-container, .filter-form {
-    margin: auto;
     max-width: 1200px;
 }
