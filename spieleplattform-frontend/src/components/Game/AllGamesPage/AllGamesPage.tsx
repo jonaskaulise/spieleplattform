@@ -85,7 +85,7 @@ export default function AllGamesPage() {
                         releaseDate={game.releaseDate}
                         developer={game.developer}
                         description={game.description}
-                        imgUrl={game.imgUrl}
+                        imageUrl={game.imageUrl}
                         youtubeId={game.youtubeId}
                         gameConsoles={game.gameConsoles}
                         ratings={game.ratings}

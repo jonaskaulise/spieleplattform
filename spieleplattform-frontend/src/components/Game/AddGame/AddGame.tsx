@@ -30,7 +30,7 @@ export default function AddGame() {
             .catch(error => {
                 setErrorStatus(error.response.status)
             })
-    }, [])
+    }, [keycloak.token])
 
     function toggleGameConsoleSelectedFlag(index: number) {
         if (gameConsoleSelectedFlags == null) return
@@ -42,7 +42,7 @@ export default function AddGame() {
     function submitGame() {
         if (gameConsoles == null) return
 
-        var gameConsoleIds = new Array<number>(0)
+        const gameConsoleIds = new Array<number>(0);
         for(let index = 0; index < gameConsoles?.length; index++) {
             if (gameConsoleSelectedFlags[index]) {
                 gameConsoleIds.push(gameConsoles[index].id)
@@ -57,6 +57,8 @@ export default function AddGame() {
             youtubeId: youtubeId,
             gameConsoleIds: gameConsoleIds
         }
+
+        console.log(addGameDTO)
 
         axios.post<Game>(
             "/games",
@@ -104,10 +106,10 @@ export default function AddGame() {
                     <div className="add-game-game-consoles">
                         <ul>
                             {gameConsoles.map((gameConsole, index) =>
-                                <li 
-                                    className={ gameConsoleSelectedFlags[index] == true? "game-console-selected" : "game-console-unselected"}
-                                    value={gameConsole.id} 
-                                    key={gameConsole.id} 
+                                <li
+                                    className={ gameConsoleSelectedFlags[index]? "game-console-selected" : "game-console-unselected"}
+                                    value={gameConsole.id}
+                                    key={gameConsole.id}
                                     onClick={() => {toggleGameConsoleSelectedFlag(index)}}
                                 >{gameConsole.name}</li>
                             )}

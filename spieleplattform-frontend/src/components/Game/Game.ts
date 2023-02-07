@@ -7,7 +7,7 @@ export default interface Game {
     releaseDate: Date
     developer: string
     description: string
-    imgUrl: string
+    imageUrl: string
     youtubeId: string
     gameConsoles: Array<GameConsole>
     ratings: Array<Rating>

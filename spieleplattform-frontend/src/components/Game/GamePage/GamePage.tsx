@@ -67,7 +67,7 @@ export default function GamePage() {
     return game && (
         <>
             <div className="game-info">
-                <img src={game.imgUrl} alt={game.name} />
+                <img src={game.imageUrl} alt={game.name} />
                 <div className="game-title">
                     <h1>{game.name}</h1>
                     <div className="game-details">
@@ -105,7 +105,7 @@ export default function GamePage() {
                         )}
                     </ul>
                 </div>
-                {!userAlreadyPostedRaiting(keycloak.tokenParsed?.preferred_username) &&  
+                {!userAlreadyPostedRaiting(keycloak.tokenParsed?.preferred_username) &&
                     <>
                         <div className="seperator" />
                         <AddRating submitRatingDTO={submitRatingDTO} />
