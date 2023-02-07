@@ -11,6 +11,7 @@ data class Game(
     var name: String,
     var releaseDate: LocalDate,
     var developer: String,
+    var authorUsername: String,
     @Column(length = 65535)
     var description: String,
     @Column(length = 65535)

@@ -4,6 +4,7 @@ import java.time.LocalDate
 
 data class GameDTO(
     var name: String,
+    var developer: String,
     var releaseDate: LocalDate,
     var description: String,
     var imageUrl: String,

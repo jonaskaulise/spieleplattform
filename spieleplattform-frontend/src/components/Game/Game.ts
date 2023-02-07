@@ -6,6 +6,7 @@ export default interface Game {
     name: string
     releaseDate: Date
     developer: string
+    author: string
     description: string
     imageUrl: string
     youtubeId: string

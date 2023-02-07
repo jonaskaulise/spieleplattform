@@ -16,6 +16,7 @@ export default function AddGame() {
     const { keycloak } = useKeycloak()
 
     const [name, setName] = useState<string>("")
+    const [developer, setDeveloper] = useState<string>("")
     const [releaseDate, setReleaseDate] = useState<Date>(new Date())
     const [imageUrl, setImageUrl] = useState<string>("")
     const [youtubeId, setYoutubeId] = useState<string>("")
@@ -51,6 +52,7 @@ export default function AddGame() {
 
         const addGameDTO: AddGameDTO = {
             name: name,
+            developer: developer,
             releaseDate: releaseDate,
             description: description,
             imageUrl: imageUrl,
@@ -65,7 +67,7 @@ export default function AddGame() {
             addGameDTO,
             { headers: { 'Authorization': `Bearer ${keycloak.token}` } })
             .then((game) => {
-                console.log(game.data)
+
             })
             .catch(error => {
                 console.log(error)
@@ -82,6 +84,10 @@ export default function AddGame() {
                 <div className="add-game-input">
                     <label>Name:</label>
                     <input type="text" onChange={(e) => setName(e.target.value)}/>
+                </div>
+                <div className="add-game-input">
+                    <label>Developer:</label>
+                    <input type="text" onChange={(e) => setDeveloper(e.target.value)}/>
                 </div>
                 <div className="add-game-input">
                     <label>Release date:</label>
