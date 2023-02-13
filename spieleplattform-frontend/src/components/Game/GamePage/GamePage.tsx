@@ -1,6 +1,6 @@
-import { useParams } from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import Game from "../Game";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Error from "../../Error/Error";
 import "./GamePage.scss";
@@ -17,10 +17,28 @@ export default function GamePage() {
     const [game, setGame] = useState<Game | null>(null);
     const [errorStatus, setErrorStatus] = useState(null);
 
+    const username = keycloak.tokenParsed?.preferred_username
     const opts: YouTubeProps['opts'] = {
         width: '100%',
         height: '100%'
     };
+
+    useEffect(() => {
+        axios.get("/games/" + id, { headers: { 'Authorization': `Bearer ${keycloak.token}` } })
+            .then((response) => {
+                setGame(response.data)
+            })
+            .catch(error => {
+                setErrorStatus(error.response.status);
+            })
+    }, [id])
+
+    function isTheAuthor(): boolean {
+        if (game === null) {
+            return false
+        }
+        return game.authorUsername === username ;
+    }
 
     function submitRatingDTO(ratingDTO: RatingDTO) {
         if (game === null) return
@@ -39,10 +57,10 @@ export default function GamePage() {
             })
     }
 
-    function userAlreadyPostedRaiting(username: string) : boolean {
+    function userAlreadyPostedRating(username: string) : boolean {
         if (game === null) return false
 
-        for(var index = 0; index < game.ratings.length; index++) {
+        for(let index = 0; index < game.ratings.length; index++) {
             if (game.ratings[index].username === username) {
                 return true
             }
@@ -50,16 +68,6 @@ export default function GamePage() {
 
         return false
     }
-
-    useEffect(() => {
-        axios.get("/games/" + id, { headers: { 'Authorization': `Bearer ${keycloak.token}` } })
-            .then((response) => {
-                setGame(response.data)
-            })
-            .catch(error => {
-                setErrorStatus(error.response.status);
-            })
-    }, [id])
 
     if (errorStatus) {
         return <Error message={"Error " + errorStatus}></Error>
@@ -81,12 +89,14 @@ export default function GamePage() {
                         </div>
                     </div>
                     <p>{game.description}</p>
-
+                    {isTheAuthor() &&
+                        <Link className="edit-game-button" to={"/games/edit/" + id}>Edit Game</Link>
+                    }
                 </div>
-                <div className="seperator"></div>
+                <div className="separator"></div>
 
                 <YouTube videoId={game.youtubeId} opts={opts} className="trailer"></YouTube>
-                <div className="seperator"></div>
+                <div className="separator"></div>
                 <div className="game-ratings">
                     <h1>Ratings:</h1>
                     <ul>
@@ -105,9 +115,9 @@ export default function GamePage() {
                         )}
                     </ul>
                 </div>
-                {!userAlreadyPostedRaiting(keycloak.tokenParsed?.preferred_username) &&
+                {!userAlreadyPostedRating(keycloak.tokenParsed?.preferred_username) &&
                     <>
-                        <div className="seperator" />
+                        <div className="separator" />
                         <AddRating submitRatingDTO={submitRatingDTO} />
                     </>
                 }
