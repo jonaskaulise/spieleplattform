@@ -10,8 +10,9 @@
     }
 
     .game-title {
+        position: relative;
         width: 70%;
-        padding: 30px;
+        padding: 30px 30px 50px 30px;
         background-color: #dddddd;
 
         h1 {
@@ -34,9 +35,27 @@
         p {
             font-size: 16px;
         }
+
+        .edit-game-button {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            height: 30px;
+            font-size: 18px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            background-color: cadetblue;
+            line-height: 30px;
+            padding: 0 10px 0 10px;
+        }
+
+        .edit-game-button:hover {
+            box-shadow: 0 0 3px 0 gray;
+        }
     }
 
-    .seperator {
+    .separator {
         width: 100%;
         height: 25px;
     }
