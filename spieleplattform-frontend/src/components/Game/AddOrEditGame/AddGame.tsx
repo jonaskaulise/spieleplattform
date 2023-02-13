@@ -3,25 +3,24 @@ import Game from "../Game";
 import GameDTO from "../GameDTO";
 import axios from "axios";
 import {useKeycloak} from "@react-keycloak/web";
+import {useState} from "react";
 
 export default function AddGame() {
 
     const { keycloak } = useKeycloak()
 
-    const emptyGame : Game = {
-        authorUsername: "",
-        description: "",
-        developer: "",
-        gameConsoles: [],
-        id: 0,
-        imageUrl: "",
+    const emptyGameDTO : GameDTO = {
         name: "",
-        ratings: [],
+        developer: "",
         releaseDate: new Date(),
-        youtubeId: ""
+        description: "",
+        imageUrl: "",
+        youtubeId: "",
+        gameConsoleIds: []
     }
+    const [gameDTO, setGameDTO] = useState<GameDTO>(emptyGameDTO)
 
-    const submitFunction : (gameDTO: GameDTO) => void = (gameDTO : GameDTO) => {
+    const submitFunction : (gameDTO: GameDTO) => GameDTO = (gameDTO : GameDTO) => {
         axios.post<Game>(
             "/games",
             gameDTO,
@@ -32,9 +31,12 @@ export default function AddGame() {
             .catch(error => {
                 console.log(error)
             })
+        const newGameDTO = structuredClone(emptyGameDTO)
+        setGameDTO(newGameDTO)
+        return newGameDTO
     }
 
     return (
-        <AddOrEditGame title={"Add Game"} game={emptyGame} submitFunction={submitFunction}/>
+        <AddOrEditGame title={"Add Game"} game={gameDTO} setGame={setGameDTO} submitFunction={submitFunction}/>
     )
 }
