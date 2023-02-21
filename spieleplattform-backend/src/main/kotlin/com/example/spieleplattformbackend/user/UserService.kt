@@ -18,7 +18,9 @@ class UserService() {
         val lastname = token.claims["family_name"] as String? ?: return null
         val email = token.claims["email"] as String? ?: return null
         val id = token.claims["sid"] as String? ?: return null
+        val realmAccess = token.claims["realm_access"] as Map<*, *>? ?: return null
+        val roles = (realmAccess["roles"] as List<*>?) ?: return null
 
-        return User(username, firstname, lastname, email, id)
+        return User(username, firstname, lastname, email, roles, id)
     }
 }

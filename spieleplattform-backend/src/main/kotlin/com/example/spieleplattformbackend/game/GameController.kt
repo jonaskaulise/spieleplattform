@@ -23,4 +23,13 @@ class GameController(@Autowired var gameService: GameService) {
         return gameService.getGameById(id)
             ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
     }
+
+    @PostMapping
+    fun addGame(@RequestBody gameDTO: GameDTO): Game {
+        try {
+            return gameService.saveGame(gameDTO)
+        } catch (exception: Exception) {
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, exception.message)
+        }
+    }
 }

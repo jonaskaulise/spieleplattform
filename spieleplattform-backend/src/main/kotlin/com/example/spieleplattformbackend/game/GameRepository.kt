@@ -20,4 +20,6 @@ interface GameRepository : CrudRepository<Game, Int> {
         gameConsole: GameConsole,
         nameSearch: String
     ): Iterable<Game>
+
+    fun existsByName(name: String): Boolean
 }

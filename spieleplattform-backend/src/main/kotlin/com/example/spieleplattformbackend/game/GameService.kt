@@ -2,8 +2,10 @@ package com.example.spieleplattformbackend.game
 
 import com.example.spieleplattformbackend.gameConsole.GameConsole
 import com.example.spieleplattformbackend.gameConsole.GameConsoleRepository
+import com.example.spieleplattformbackend.gameConsole.GameConsoleService
 import com.example.spieleplattformbackend.rating.Rating
 import com.example.spieleplattformbackend.rating.RatingRepository
+import com.example.spieleplattformbackend.user.UserService
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import java.time.LocalDate
@@ -12,7 +14,9 @@ import java.time.LocalDate
 class GameService(
     val gameRepository: GameRepository,
     val ratingRepository: RatingRepository,
-    val gameConsoleRepository: GameConsoleRepository
+    val gameConsoleRepository: GameConsoleRepository,
+    val userService: UserService,
+    val gameConsoleService: GameConsoleService
 ) {
     fun insertExampleData() {
         //consoles
@@ -260,5 +264,25 @@ class GameService(
             (gameConsoleId == null) -> getGamesByNameSearch(nameSearch)
             else -> getGamesByGameConsoleIdAndNameSearch(gameConsoleId, nameSearch)
         }
+    }
+
+    fun saveGame(gameDTO: GameDTO): Game {
+        val user = userService.getCurrentUser() ?: throw Exception("User doesn't exist.")
+        if (!user.isAuthor()) throw Exception("User is not an author.")
+        if (gameRepository.existsByName(gameDTO.name)) throw Exception("Game with name exists already.")
+        val gameConsoles = gameConsoleService.getGameConsolesByGameConsoleIds(gameDTO.gameConsoleIds)
+            ?: throw Exception("At least on Console doesn't exist.")
+
+        val game = Game(
+            gameDTO.name,
+            gameDTO.releaseDate,
+            "${user.firstname} ${user.lastname}",
+            gameDTO.description,
+            gameDTO.imgUrl,
+            gameDTO.youtubeId,
+            gameConsoles
+        )
+        gameRepository.save(game)
+        return game
     }
 }
