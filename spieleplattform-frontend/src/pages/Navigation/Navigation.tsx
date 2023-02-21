@@ -26,20 +26,30 @@ function Navigation() {
                     {!keycloak.authenticated && (
                         <button
                             type="button"
-                            className="text-blue-800"
-                            onClick={() => keycloak.login()}
+                            className="sign-up"
+                            onClick={() => keycloak.register()}
                         >
-                            Login
+                            Sign up
                         </button>
                     )}
 
-                    {!!keycloak.authenticated && (
+                    {!keycloak.authenticated && (
                         <button
                             type="button"
-                            className="text-blue-800"
+                            className="sign-in-out"
+                            onClick={() => keycloak.login()}
+                        >
+                            Sign in
+                        </button>
+                    )}
+
+                    {keycloak.authenticated && (
+                        <button
+                            type="button"
+                            className="sign-in-out"
                             onClick={() => keycloak.logout()}
                         >
-                            Logout {keycloak.tokenParsed?.preferred_username}
+                            Sign out
                         </button>
                     )}
                 </div>
