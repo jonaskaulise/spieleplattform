@@ -10,11 +10,6 @@ data class User(
 ) {
 
     fun isAuthor(): Boolean {
-        for (role in roles) {
-            if (role == "author") {
-                return true
-            }
-        }
-        return false
+        return roles.any { role -> role == "author" }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.spieleplattformbackend.game
 
+import com.example.spieleplattformbackend.exceptions.BadRequestException
 import com.example.spieleplattformbackend.gameConsole.GameConsole
 import com.example.spieleplattformbackend.gameConsole.GameConsoleRepository
 import com.example.spieleplattformbackend.gameConsole.GameConsoleService
@@ -276,40 +277,40 @@ class GameService(
         }
     }
 
-    fun saveGame(gameDTO: GameDTO): Game {
-        val user = userService.getCurrentUser() ?: throw Exception("User doesn't exist.")
-        if (!user.isAuthor()) throw Exception("User is not an author.")
-        if (gameRepository.existsByName(gameDTO.name)) throw Exception("Game with name exists already.")
-        val gameConsoles = gameConsoleService.getGameConsolesByGameConsoleIds(gameDTO.gameConsoleIds)
-            ?: throw Exception("At least on Console doesn't exist.")
+    fun saveGame(addUpdateGameDTO: AddUpdateGameDTO): Game {
+        val user = userService.getCurrentUser() ?: throw BadRequestException("User doesn't exist.")
+        if (!user.isAuthor()) throw BadRequestException("User is not an author.")
+        if (gameRepository.existsByName(addUpdateGameDTO.name)) throw BadRequestException("Game with name exists already.")
+        val gameConsoles = gameConsoleService.getGameConsolesByGameConsoleIds(addUpdateGameDTO.gameConsoleIds)
+            ?: throw BadRequestException("At least one Console doesn't exist.")
 
         val game = Game(
-            gameDTO.name,
-            gameDTO.releaseDate,
-            gameDTO.developer,
+            addUpdateGameDTO.name,
+            addUpdateGameDTO.releaseDate,
+            addUpdateGameDTO.developer,
             user.username,
-            gameDTO.description,
-            gameDTO.imageUrl,
-            gameDTO.youtubeId,
+            addUpdateGameDTO.description,
+            addUpdateGameDTO.imageUrl,
+            addUpdateGameDTO.youtubeId,
             gameConsoles
         )
         gameRepository.save(game)
         return game
     }
 
-    fun updateGame(id: Int, gameDTO: GameDTO): Game {
-        val user = userService.getCurrentUser() ?: throw Exception("User doesn't exist.")
-        val game = gameRepository.findByIdOrNull(id) ?: throw Exception("Game with given id doesn't exist.")
-        if (game.authorUsername != user.username) throw Exception("User is not allowed to update Game.")
-        val gameConsoles = gameConsoleService.getGameConsolesByGameConsoleIds(gameDTO.gameConsoleIds)
-            ?: throw Exception("At least on Console doesn't exist.")
+    fun updateGame(id: Int, addUpdateGameDTO: AddUpdateGameDTO): Game {
+        val user = userService.getCurrentUser() ?: throw BadRequestException("User doesn't exist.")
+        val game = gameRepository.findByIdOrNull(id) ?: throw BadRequestException("Game with given id doesn't exist.")
+        if (game.authorUsername != user.username) throw BadRequestException("User is not allowed to update Game.")
+        val gameConsoles = gameConsoleService.getGameConsolesByGameConsoleIds(addUpdateGameDTO.gameConsoleIds)
+            ?: throw BadRequestException("At least on Console doesn't exist.")
 
-        game.name = gameDTO.name
-        game.releaseDate = gameDTO.releaseDate
-        game.developer = gameDTO.developer
-        game.description = gameDTO.description
-        game.imageUrl = gameDTO.imageUrl
-        game.youtubeId = gameDTO.youtubeId
+        game.name = addUpdateGameDTO.name
+        game.releaseDate = addUpdateGameDTO.releaseDate
+        game.developer = addUpdateGameDTO.developer
+        game.description = addUpdateGameDTO.description
+        game.imageUrl = addUpdateGameDTO.imageUrl
+        game.youtubeId = addUpdateGameDTO.youtubeId
         game.gameConsoles = gameConsoles
 
         gameRepository.save(game)

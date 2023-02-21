@@ -1,5 +1,6 @@
 package com.example.spieleplattformbackend.game
 
+import com.example.spieleplattformbackend.exceptions.BadRequestException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
@@ -25,19 +26,19 @@ class GameController(@Autowired var gameService: GameService) {
     }
 
     @PostMapping
-    fun addGame(@RequestBody gameDTO: GameDTO): Game {
+    fun addGame(@RequestBody addUpdateGameDTO: AddUpdateGameDTO): Game {
         try {
-            return gameService.saveGame(gameDTO)
-        } catch (exception: Exception) {
+            return gameService.saveGame(addUpdateGameDTO)
+        } catch (exception: BadRequestException) {
             throw ResponseStatusException(HttpStatus.BAD_REQUEST, exception.message)
         }
     }
 
     @PutMapping("/{id}")
-    fun updateGame(@PathVariable id: Int, @RequestBody gameDTO: GameDTO): Game {
+    fun updateGame(@PathVariable id: Int, @RequestBody addUpdateGameDTO: AddUpdateGameDTO): Game {
         try {
-            return gameService.updateGame(id, gameDTO)
-        } catch (exception: Exception) {
+            return gameService.updateGame(id, addUpdateGameDTO)
+        } catch (exception: BadRequestException) {
             throw ResponseStatusException(HttpStatus.BAD_REQUEST, exception.message)
         }
     }
