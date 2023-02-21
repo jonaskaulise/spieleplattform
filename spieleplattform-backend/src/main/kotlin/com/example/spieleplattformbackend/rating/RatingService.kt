@@ -1,9 +1,11 @@
 package com.example.spieleplattformbackend.rating
 
+import com.example.spieleplattformbackend.exceptions.BadRequestException
 import com.example.spieleplattformbackend.game.Game
 import com.example.spieleplattformbackend.game.GameService
 import com.example.spieleplattformbackend.user.UserService
 import org.springframework.stereotype.Service
+import javax.naming.AuthenticationException
 
 @Service
 class RatingService(
@@ -12,17 +14,25 @@ class RatingService(
     val userService: UserService
 ) {
 
-    fun saveRating(ratingDTO: RatingDTO): Rating? {
-        val game: Game = gameService.getGameById(ratingDTO.gameId) ?: return null
-        val username = userService.getCurrentUsername() ?: return null
-        if (ratingRepository.existsByGameAndUsername(game, username)) return null
+    fun saveRating(addRatingDTO: AddRatingDTO): Rating {
+        val username =
+            userService.getCurrentUsername() ?: throw AuthenticationException("Couldn't read username from token.")
+
+        if (!addRatingDTO.hasValidRatingValues()) throw BadRequestException("At least one Rating value is out of range.")
+        val game: Game =
+            gameService.getGameById(addRatingDTO.gameId) ?: throw BadRequestException("Game doesn't exist.")
+        if (ratingRepository.existsByGameAndUsername(
+                game,
+                username
+            )
+        ) throw BadRequestException("User already submitted a rating for this game.")
 
         val rating = Rating(
-            ratingDTO.graphicRating,
-            ratingDTO.soundRating,
-            ratingDTO.addictionRating,
-            ratingDTO.actionRating,
-            ratingDTO.comment,
+            addRatingDTO.graphicRating,
+            addRatingDTO.soundRating,
+            addRatingDTO.addictionRating,
+            addRatingDTO.actionRating,
+            addRatingDTO.comment,
             username,
             game
         )

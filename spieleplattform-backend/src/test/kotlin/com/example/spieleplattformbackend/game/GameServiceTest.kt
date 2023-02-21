@@ -2,7 +2,10 @@ package com.example.spieleplattformbackend.game
 
 import com.example.spieleplattformbackend.gameConsole.GameConsole
 import com.example.spieleplattformbackend.gameConsole.GameConsoleRepository
+import com.example.spieleplattformbackend.gameConsole.GameConsoleService
 import com.example.spieleplattformbackend.rating.RatingRepository
+import com.example.spieleplattformbackend.user.User
+import com.example.spieleplattformbackend.user.UserService
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -15,16 +18,33 @@ class GameServiceTest {
     val gameRepository: GameRepository = mockk()
     val ratingRepository: RatingRepository = mockk()
     val gameConsoleRepository: GameConsoleRepository = mockk()
-    val gameService = GameService(gameRepository, ratingRepository, gameConsoleRepository)
-    val gameConsole = GameConsole("Xbox")
+    val userService: UserService = mockk()
+    val gameConsoleService: GameConsoleService = mockk()
+    val gameService =
+        GameService(gameRepository, ratingRepository, gameConsoleRepository, userService, gameConsoleService)
+
+    val gameConsole = GameConsole("Xbox", mutableListOf(), 1)
     val game = Game(
         "Minecraft",
         LocalDate.of(2011, 11, 18),
         "Mojang Studios",
-        "Minecraft ist ein Sandbox-Computerspiel, das ursprünglich vom schwedischen Programmierer Markus „Notch“ Persson und seinem dazu gegründeten Unternehmen Mojang entwickelt wurde. Mojang samt Spiel gehört seit September 2014 zu Microsoft. Minecraft erschien erstmals am 17. Mai 2009 als Early-Access-Titel für PC. In der Folge wurde Minecraft für diverse weitere Plattformen und Spielkonsolen veröffentlicht. Die meisten davon erhalten bis heute regelmäßig kostenfreie Aktualisierungen mit neuen Inhalten.",
+        "author1",
+        "Minecraft is a game.",
         "https://www.minecraft.net/content/dam/games/minecraft/key-art/Games_Subnav_Minecraft-300x465.jpg",
-        "MmB9b5njVbA"
+        "MmB9b5njVbA",
+        mutableListOf(gameConsole),
+        mutableListOf()
     )
+    val addUpdateGameDTO = AddUpdateGameDTO(
+        "Minecraft",
+        "Mojang Studios",
+        LocalDate.of(2011, 11, 18),
+        "Minecraft is a game.",
+        "https://www.minecraft.net/content/dam/games/minecraft/key-art/Games_Subnav_Minecraft-300x465.jpg",
+        "MmB9b5njVbA",
+        mutableListOf(1)
+    )
+    val currentUser = User("author1", "author", "1", "author@1.de", mutableListOf("author"), "1")
 
     @Test
     fun whenGetGame_thenReturnGame() {
@@ -40,7 +60,7 @@ class GameServiceTest {
     }
 
     @Test
-    fun `when getAllGames return games`() {
+    fun `getAllGames returns games`() {
         //given
         every { gameRepository.findAll() } returns mutableListOf(game)
 
@@ -53,7 +73,7 @@ class GameServiceTest {
     }
 
     @Test
-    fun `when getGamesByGameConsoleId with id=1 return games`() {
+    fun `getGamesByGameConsoleId returns games whose console-list include console with given consoleId`() {
         //given
         every { gameConsoleRepository.findByIdOrNull(1) } returns gameConsole
         every { gameRepository.findGamesByGameConsolesContains(gameConsole) } returns mutableListOf(game)
@@ -70,7 +90,7 @@ class GameServiceTest {
     }
 
     @Test
-    fun `when getGamesByGameConsoleId with id=2 return empty list`() {
+    fun `getGamesByGameConsoleId returns empty list when no games console-list include console with given consoleId`() {
         //given
         every { gameConsoleRepository.findByIdOrNull(2) } returns gameConsole
         every { gameRepository.findGamesByGameConsolesContains(gameConsole) } returns mutableListOf()
@@ -87,7 +107,7 @@ class GameServiceTest {
     }
 
     @Test
-    fun `when getGamesByNameSearch with m return list with minecraft`() {
+    fun `getGamesByNameSearch returns all games whose names contain the nameSearch-string`() {
         //given
         every { gameRepository.findGamesByNameContainsIgnoreCase("m") } returns mutableListOf(game)
 
@@ -100,7 +120,7 @@ class GameServiceTest {
     }
 
     @Test
-    fun `when getGamesByNameSearch with q return empty list`() {
+    fun `getGamesByNameSearch returns empty list when the nameSearch-string isn't included in any game-name`() {
         //given
         every { gameRepository.findGamesByNameContainsIgnoreCase("q") } returns mutableListOf()
 
@@ -113,7 +133,7 @@ class GameServiceTest {
     }
 
     @Test
-    fun `when getGamesByGameConsoleIdAndNameSearch with id=1 and m return minecraft`() {
+    fun `getGamesByGameConsoleIdAndNameSearch returns games whose names contain given nameSearch-string and whose console-list include consoles with given consoleId`() {
         //given
         every { gameConsoleRepository.findByIdOrNull(1) } returns gameConsole
         every {
@@ -132,7 +152,7 @@ class GameServiceTest {
     }
 
     @Test
-    fun `when getGamesByGameConsoleIdAndNameSearch with id=2 and q return empty list`() {
+    fun `getGamesByGameConsoleIdAndNameSearch returns empty list when no game-name contains given nameSearch-string or no games console-list includes console with given consoleId`() {
         //given
         every { gameConsoleRepository.findByIdOrNull(2) } returns gameConsole
         every {
@@ -151,7 +171,7 @@ class GameServiceTest {
     }
 
     @Test
-    fun `when getGamesByOptionalConsoleIdAndNameSearch with id=1 and m return minecraft`() {
+    fun `getGamesByOptionalConsoleIdAndNameSearch returns games whose names contain given nameSearch-string and whose console-list include consoles with given consoleId`() {
         //given
         every { gameConsoleRepository.findByIdOrNull(1) } returns gameConsole
         every {
@@ -170,7 +190,7 @@ class GameServiceTest {
     }
 
     @Test
-    fun `when getGamesByOptionalConsoleIdAndNameSearch with id=2 and q return empty list`() {
+    fun `getGamesByOptionalConsoleIdAndNameSearch returns empty list when no game-name contains given nameSearch-string or no games console-list includes console with given consoleId`() {
         //given
         every { gameConsoleRepository.findByIdOrNull(2) } returns gameConsole
         every {
@@ -186,5 +206,63 @@ class GameServiceTest {
             gameRepository.findGamesByGameConsolesContainsAndNameContainsIgnoreCase(gameConsole, "q")
         }
         assertEquals(result, mutableListOf<Game>())
+    }
+
+    @Test
+    fun `saveGame saves given game if context is correct`() {
+        //given
+        every { userService.getCurrentUser() } returns currentUser
+        every { gameRepository.existsByName(addUpdateGameDTO.name) } returns false
+        every { gameConsoleService.getGameConsolesByGameConsoleIds(addUpdateGameDTO.gameConsoleIds) } returns mutableListOf(
+            gameConsole
+        )
+        every { gameRepository.save(any()) } returns game
+
+        //when
+        val result = gameService.saveGame(addUpdateGameDTO)
+
+        //then
+        verify {
+            userService.getCurrentUser()
+            gameRepository.existsByName(addUpdateGameDTO.name)
+            gameConsoleService.getGameConsolesByGameConsoleIds(addUpdateGameDTO.gameConsoleIds)
+            gameRepository.save(any())
+        }
+        assertEquals(result.name, game.name)
+        assertEquals(result.releaseDate, game.releaseDate)
+        assertEquals(result.description, game.description)
+        assertEquals(result.developer, game.developer)
+        assertEquals(result.authorUsername, game.authorUsername)
+        assertEquals(result.imageUrl, game.imageUrl)
+        assertEquals(result.youtubeId, game.youtubeId)
+    }
+
+    @Test
+    fun `updateGame updates game with given gameId by given game-data if context is correct`() {
+        //given
+        every { userService.getCurrentUser() } returns currentUser
+        every { gameRepository.findByIdOrNull(1) } returns game
+        every { gameConsoleService.getGameConsolesByGameConsoleIds(addUpdateGameDTO.gameConsoleIds) } returns mutableListOf(
+            gameConsole
+        )
+        every { gameRepository.save(any()) } returns game
+
+        //when
+        val result = gameService.updateGame(1, addUpdateGameDTO)
+
+        //then
+        verify {
+            userService.getCurrentUser()
+            gameRepository.findByIdOrNull(1)
+            gameConsoleService.getGameConsolesByGameConsoleIds(addUpdateGameDTO.gameConsoleIds)
+            gameRepository.save(any())
+        }
+        assertEquals(result.name, game.name)
+        assertEquals(result.releaseDate, game.releaseDate)
+        assertEquals(result.description, game.description)
+        assertEquals(result.developer, game.developer)
+        assertEquals(result.authorUsername, game.authorUsername)
+        assertEquals(result.imageUrl, game.imageUrl)
+        assertEquals(result.youtubeId, game.youtubeId)
     }
 }

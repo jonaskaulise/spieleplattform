@@ -20,6 +20,7 @@ class GameRepositoryTest(
         "Minecraft",
         LocalDate.of(2011, 11, 18),
         "Mojang Studios",
+        "author1",
         "Minecraft ist ein Sandbox-Computerspiel, das ursprünglich vom schwedischen Programmierer Markus „Notch“ Persson und seinem dazu gegründeten Unternehmen Mojang entwickelt wurde. Mojang samt Spiel gehört seit September 2014 zu Microsoft. Minecraft erschien erstmals am 17. Mai 2009 als Early-Access-Titel für PC. In der Folge wurde Minecraft für diverse weitere Plattformen und Spielkonsolen veröffentlicht. Die meisten davon erhalten bis heute regelmäßig kostenfreie Aktualisierungen mit neuen Inhalten.",
         "https://www.minecraft.net/content/dam/games/minecraft/key-art/Games_Subnav_Minecraft-300x465.jpg",
         "MmB9b5njVbA"
@@ -48,7 +49,7 @@ class GameRepositoryTest(
     }
 
     @Test
-    fun when_findGameByName() {
+    fun `findGameByName returns game with given name`() {
         //given
         gameRepository.save(game)
 
@@ -60,7 +61,7 @@ class GameRepositoryTest(
     }
 
     @Test
-    fun when_findGamesByGameConsolesContains() {
+    fun `findGamesByGameConsolesContains returns games whose console-lists contain given console`() {
         //given
         gameConsoleRepository.save(gameConsole)
         gameRepository.save(game)
@@ -73,7 +74,7 @@ class GameRepositoryTest(
     }
 
     @Test
-    fun when_findGamesByNameContainsIgnoreCase() {
+    fun `findGamesByNameContainsIgnoreCas returns games whose names contain given string`() {
         //given
         gameRepository.save(game)
 
@@ -85,7 +86,7 @@ class GameRepositoryTest(
     }
 
     @Test
-    fun when_findGamesByGameConsolesContainsAndNameContainsIgnoreCase() {
+    fun `findGamesByGameConsolesContainsAndNameContainsIgnoreCase returns games whose names contain given string and whose console-lists contain given console`() {
         //given
         gameConsoleRepository.save(gameConsole)
         gameRepository.save(game)

@@ -2,7 +2,7 @@ package com.example.spieleplattformbackend.game
 
 import java.time.LocalDate
 
-data class GameDTO(
+data class AddUpdateGameDTO(
     var name: String,
     var developer: String,
     var releaseDate: LocalDate,

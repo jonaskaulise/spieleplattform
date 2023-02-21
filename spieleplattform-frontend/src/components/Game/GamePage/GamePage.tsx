@@ -59,14 +59,7 @@ export default function GamePage() {
 
     function userAlreadyPostedRating(username: string) : boolean {
         if (game === null) return false
-
-        for(let index = 0; index < game.ratings.length; index++) {
-            if (game.ratings[index].username === username) {
-                return true
-            }
-        }
-
-        return false
+        return game.ratings.some((rating) => rating.username === username)
     }
 
     if (errorStatus) {
