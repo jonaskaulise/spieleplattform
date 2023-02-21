@@ -11,14 +11,14 @@ function Navigation() {
             <div className="flex-container">
                 <ul>
                     <li>
-                        <NavLink className={({isActive}) => {
-                            return isActive ? "is-active" : "";
-                        }} to="/">Home</NavLink>
+                        <NavLink className={({isActive}) => 
+                            isActive ? "is-active" : ""
+                        } to="/">Home</NavLink>
                     </li>
                     <li>
-                        <NavLink reloadDocument className={({isActive}) => {
-                            return isActive ? "is-active" : "";
-                        }} to="/games">Games</NavLink>
+                        <NavLink reloadDocument className={({isActive}) => 
+                            isActive ? "is-active" : ""
+                        } to="/games">Games</NavLink>
                     </li>
                 </ul>
 

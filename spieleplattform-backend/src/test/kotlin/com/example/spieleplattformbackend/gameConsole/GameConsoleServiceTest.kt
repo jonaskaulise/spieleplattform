@@ -13,7 +13,7 @@ class GameConsoleServiceTest {
     val gameConsole = GameConsole("Xbox")
 
     @Test
-    fun when_getGameConsoles() {
+    fun `when getGameConsoles return list with Xbox`() {
         //given
         every { gameConsoleRepository.findAll() } returns mutableListOf(gameConsole)
 

@@ -21,7 +21,7 @@ export default function AllGamesPage() {
     const nameSearch = nameSearchValue == null ? "" : nameSearchValue.toString()
 
     useEffect(() => {
-        axios.get("/gameConsoles")
+        axios.get("/gameConsoles", {headers: { 'Authorization': `Bearer ${keycloak.token}`}})
             .then((response) => {
                 setGameConsoles(response.data)
             })

@@ -9,7 +9,7 @@ import org.springframework.web.server.ResponseStatusException
 @RequestMapping("/ratings")
 class RatingController(@Autowired var ratingService: RatingService) {
 
-    @PostMapping("")
+    @PostMapping
     fun addRating(@RequestBody ratingDTO: RatingDTO): Rating {
         return ratingService.saveRating(ratingDTO)
             ?: throw ResponseStatusException(HttpStatus.BAD_REQUEST)

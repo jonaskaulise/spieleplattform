@@ -30,7 +30,6 @@ class SecurityConfig() {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeHttpRequests { auth ->
-                auth.requestMatchers("/gameConsoles/**").permitAll()
                 auth.anyRequest().authenticated()
             }
 

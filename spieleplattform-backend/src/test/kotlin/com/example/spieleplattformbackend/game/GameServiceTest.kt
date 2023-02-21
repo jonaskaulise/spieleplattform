@@ -40,7 +40,7 @@ class GameServiceTest {
     }
 
     @Test
-    fun whenGetGames_thenReturnGames() {
+    fun `when getAllGames return games`() {
         //given
         every { gameRepository.findAll() } returns mutableListOf(game)
 
@@ -53,7 +53,7 @@ class GameServiceTest {
     }
 
     @Test
-    fun whenGetGamesByGameConsoleId_thenReturnGames() {
+    fun `when getGamesByGameConsoleId with id=1 return games`() {
         //given
         every { gameConsoleRepository.findByIdOrNull(1) } returns gameConsole
         every { gameRepository.findGamesByGameConsolesContains(gameConsole) } returns mutableListOf(game)
@@ -70,7 +70,24 @@ class GameServiceTest {
     }
 
     @Test
-    fun whenGetGamesByNameSearch_thenReturnGames() {
+    fun `when getGamesByGameConsoleId with id=2 return empty list`() {
+        //given
+        every { gameConsoleRepository.findByIdOrNull(2) } returns gameConsole
+        every { gameRepository.findGamesByGameConsolesContains(gameConsole) } returns mutableListOf()
+
+        //when
+        val result = gameService.getGamesByGameConsoleId(2)
+
+        //then
+        verify {
+            gameConsoleRepository.findByIdOrNull(2)
+            gameRepository.findGamesByGameConsolesContains(gameConsole)
+        }
+        assertEquals(result, mutableListOf<Game>())
+    }
+
+    @Test
+    fun `when getGamesByNameSearch with m return list with minecraft`() {
         //given
         every { gameRepository.findGamesByNameContainsIgnoreCase("m") } returns mutableListOf(game)
 
@@ -83,7 +100,20 @@ class GameServiceTest {
     }
 
     @Test
-    fun whenGetGamesByConsoleIdAndNameSearch_thenReturnGames() {
+    fun `when getGamesByNameSearch with q return empty list`() {
+        //given
+        every { gameRepository.findGamesByNameContainsIgnoreCase("q") } returns mutableListOf()
+
+        //when
+        val result = gameService.getGamesByNameSearch("q")
+
+        //then
+        verify { gameRepository.findGamesByNameContainsIgnoreCase("q") }
+        assertEquals(result, mutableListOf<Game>())
+    }
+
+    @Test
+    fun `when getGamesByGameConsoleIdAndNameSearch with id=1 and m return minecraft`() {
         //given
         every { gameConsoleRepository.findByIdOrNull(1) } returns gameConsole
         every {
@@ -102,7 +132,26 @@ class GameServiceTest {
     }
 
     @Test
-    fun whenGetGamesByOptionalConsoleIdAndNameSearch_thenReturnGames() {
+    fun `when getGamesByGameConsoleIdAndNameSearch with id=2 and q return empty list`() {
+        //given
+        every { gameConsoleRepository.findByIdOrNull(2) } returns gameConsole
+        every {
+            gameRepository.findGamesByGameConsolesContainsAndNameContainsIgnoreCase(gameConsole, "q")
+        } returns mutableListOf()
+
+        //when
+        val result = gameService.getGamesByGameConsoleIdAndNameSearch(2, "q")
+
+        //then
+        verify {
+            gameConsoleRepository.findByIdOrNull(2)
+            gameRepository.findGamesByGameConsolesContainsAndNameContainsIgnoreCase(gameConsole, "q")
+        }
+        assertEquals(result, mutableListOf<Game>())
+    }
+
+    @Test
+    fun `when getGamesByOptionalConsoleIdAndNameSearch with id=1 and m return minecraft`() {
         //given
         every { gameConsoleRepository.findByIdOrNull(1) } returns gameConsole
         every {
@@ -118,5 +167,24 @@ class GameServiceTest {
             gameRepository.findGamesByGameConsolesContainsAndNameContainsIgnoreCase(gameConsole, "m")
         }
         assertEquals(result, mutableListOf(game))
+    }
+
+    @Test
+    fun `when getGamesByOptionalConsoleIdAndNameSearch with id=2 and q return empty list`() {
+        //given
+        every { gameConsoleRepository.findByIdOrNull(2) } returns gameConsole
+        every {
+            gameRepository.findGamesByGameConsolesContainsAndNameContainsIgnoreCase(gameConsole, "q")
+        } returns mutableListOf()
+
+        //when
+        val result = gameService.getGamesByOptionalGameConsoleIdAndNameSearch(2, "q")
+
+        //then
+        verify {
+            gameConsoleRepository.findByIdOrNull(2)
+            gameRepository.findGamesByGameConsolesContainsAndNameContainsIgnoreCase(gameConsole, "q")
+        }
+        assertEquals(result, mutableListOf<Game>())
     }
 }
