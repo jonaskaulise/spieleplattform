@@ -9,12 +9,12 @@ import org.springframework.context.annotation.Bean
 
 @SpringBootApplication
 class SpieleplattformBackendApplication {
-    @Bean
-    fun run(gameService: GameService): CommandLineRunner {
-        return (CommandLineRunner {
-            //gameService.insertExampleData()
-        })
-    }
+//    @Bean
+//    fun run(gameService: GameService): CommandLineRunner {
+//        return (CommandLineRunner {
+//            gameService.insertExampleData()
+//        })
+//    }
 }
 
 fun main(args: Array<String>) {

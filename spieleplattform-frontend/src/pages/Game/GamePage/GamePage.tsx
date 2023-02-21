@@ -6,10 +6,11 @@ import Error from "../../Error/Error";
 import "./GamePage.scss";
 import RatingComponent from "./RatingComponent/RatingComponent";
 import YouTube, {YouTubeProps} from "react-youtube";
+import {useKeycloak} from "@react-keycloak/web";
 
 export default function GamePage() {
     const {id} = useParams()
-
+    const {keycloak} = useKeycloak()
     const [game, setGame] = useState<Game | null>(null);
     const [errorStatus, setErrorStatus] = useState(null);
 
@@ -19,7 +20,7 @@ export default function GamePage() {
     };
 
     useEffect(() => {
-        axios.get("/games/" + id)
+        axios.get("/games/" + id, {headers: { 'Authorization': `Bearer ${keycloak.token}`}})
             .then((response) => {
                 setGame(response.data)
             })

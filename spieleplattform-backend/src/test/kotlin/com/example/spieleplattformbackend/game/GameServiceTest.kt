@@ -91,7 +91,26 @@ class GameServiceTest {
         } returns mutableListOf(game)
 
         //when
-        val result = gameService.getGamesByConsoleIdAndNameSearch(1, "m")
+        val result = gameService.getGamesByGameConsoleIdAndNameSearch(1, "m")
+
+        //then
+        verify {
+            gameConsoleRepository.findByIdOrNull(1)
+            gameRepository.findGamesByGameConsolesContainsAndNameContainsIgnoreCase(gameConsole, "m")
+        }
+        assertEquals(result, mutableListOf(game))
+    }
+
+    @Test
+    fun whenGetGamesByOptionalConsoleIdAndNameSearch_thenReturnGames() {
+        //given
+        every { gameConsoleRepository.findByIdOrNull(1) } returns gameConsole
+        every {
+            gameRepository.findGamesByGameConsolesContainsAndNameContainsIgnoreCase(gameConsole, "m")
+        } returns mutableListOf(game)
+
+        //when
+        val result = gameService.getGamesByOptionalGameConsoleIdAndNameSearch(1, "m")
 
         //then
         verify {

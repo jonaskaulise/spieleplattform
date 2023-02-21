@@ -239,9 +239,9 @@ class GameService(
         return gameRepository.findAll()
     }
 
-    fun getGamesByGameConsoleId(id: Int): Iterable<Game> {
+    fun getGamesByGameConsoleId(id: Int): Iterable<Game>? {
         val gameConsole =
-            gameConsoleRepository.findByIdOrNull(id) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
+            gameConsoleRepository.findByIdOrNull(id) ?: return null
         return gameRepository.findGamesByGameConsolesContains(gameConsole)
     }
 
@@ -249,9 +249,18 @@ class GameService(
         return gameRepository.findGamesByNameContainsIgnoreCase(nameSearch)
     }
 
-    fun getGamesByConsoleIdAndNameSearch(consoleId: Int, nameSearch: String): Iterable<Game> {
+    fun getGamesByGameConsoleIdAndNameSearch(consoleId: Int, nameSearch: String): Iterable<Game>? {
         val gameConsole =
-            gameConsoleRepository.findByIdOrNull(consoleId) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
+            gameConsoleRepository.findByIdOrNull(consoleId) ?: return null
         return gameRepository.findGamesByGameConsolesContainsAndNameContainsIgnoreCase(gameConsole, nameSearch)
+    }
+
+    fun getGamesByOptionalGameConsoleIdAndNameSearch(gameConsoleId: Int?, nameSearch: String): Iterable<Game>? {
+        return when {
+            (gameConsoleId == null && nameSearch == "") -> getAllGames()
+            (gameConsoleId != null && nameSearch == "") -> getGamesByGameConsoleId(gameConsoleId)
+            (gameConsoleId == null) -> getGamesByNameSearch(nameSearch)
+            else -> getGamesByGameConsoleIdAndNameSearch(gameConsoleId, nameSearch)
+        }
     }
 }

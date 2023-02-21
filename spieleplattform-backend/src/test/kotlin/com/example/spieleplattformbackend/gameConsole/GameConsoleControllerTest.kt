@@ -1,5 +1,6 @@
 package com.example.spieleplattformbackend.gameConsole
 
+import com.example.spieleplattformbackend.auth.AuthService
 import com.example.spieleplattformbackend.game.GameService
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
@@ -18,6 +19,9 @@ class GameConsoleControllerTest(@Autowired val mockMvc: MockMvc) {
 
     @MockkBean
     lateinit var gameService: GameService
+
+    @MockkBean
+    lateinit var authService: AuthService
 
     val gameConsole = GameConsole("Xbox")
 
