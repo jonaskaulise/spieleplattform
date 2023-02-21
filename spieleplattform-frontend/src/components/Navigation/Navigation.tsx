@@ -16,7 +16,7 @@ function Navigation() {
                         }} to="/">Home</NavLink>
                     </li>
                     <li>
-                        <NavLink reloadDocument className={({isActive}) => { //reloadDocument
+                        <NavLink reloadDocument className={({isActive}) => {
                             return isActive ? "is-active" : "";
                         }} to="/games">Games</NavLink>
                     </li>
@@ -26,7 +26,7 @@ function Navigation() {
                     {!keycloak.authenticated && (
                         <button
                             type="button"
-                            className="sign-up"
+                            className="sign-up-button"
                             onClick={() => keycloak.register()}
                         >
                             Sign up
@@ -36,7 +36,7 @@ function Navigation() {
                     {!keycloak.authenticated && (
                         <button
                             type="button"
-                            className="sign-in-out"
+                            className="sign-in-out-button"
                             onClick={() => keycloak.login()}
                         >
                             Sign in
@@ -46,7 +46,7 @@ function Navigation() {
                     {keycloak.authenticated && (
                         <button
                             type="button"
-                            className="sign-in-out"
+                            className="sign-in-out-button"
                             onClick={() => keycloak.logout()}
                         >
                             Sign out

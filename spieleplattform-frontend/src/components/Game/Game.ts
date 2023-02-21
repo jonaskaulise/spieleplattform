@@ -11,5 +11,4 @@ export default interface Game {
     youtubeId: string;
     gameConsoles: Array<GameConsole>
     ratings: Array<Rating>;
-
 }
