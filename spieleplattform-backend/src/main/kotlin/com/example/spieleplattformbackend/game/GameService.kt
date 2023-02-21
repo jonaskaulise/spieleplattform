@@ -5,9 +5,7 @@ import com.example.spieleplattformbackend.gameConsole.GameConsoleRepository
 import com.example.spieleplattformbackend.rating.Rating
 import com.example.spieleplattformbackend.rating.RatingRepository
 import org.springframework.data.repository.findByIdOrNull
-import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
-import org.springframework.web.server.ResponseStatusException
 import java.time.LocalDate
 
 @Service
@@ -51,9 +49,9 @@ class GameService(
             "https://www.minecraft.net/content/dam/games/minecraft/key-art/Games_Subnav_Minecraft-300x465.jpg",
             "MmB9b5njVbA"
         )
-        minecraft.ratings.add(Rating(5, "Best Game ever", minecraft))
-        minecraft.ratings.add(Rating(4, "Good, but only Blocks", minecraft))
-        minecraft.ratings.add(Rating(2, "Game is ok, but i dont like the graphics", minecraft))
+        minecraft.ratings.add(Rating(5, 4, 5, 4, "Best Game ever", "user1", minecraft))
+        minecraft.ratings.add(Rating(4, 3, 4, 3, "Good, but only Blocks", "user2", minecraft))
+        minecraft.ratings.add(Rating(2, 1, 2, 1, "Game is ok, but i dont like the graphics", "user3", minecraft))
         minecraft.gameConsoles = mutableListOf(nintendo3DS, switch, ps3, ps4, psv, wiiU, xbox360, xboxOne)
         nintendo3DS.games.add(minecraft)
         switch.games.add(minecraft)
@@ -73,7 +71,7 @@ class GameService(
             "https://simscommunity.info/wp-content/uploads/2019/07/boxart.jpg",
             "GJENRAB4ykA"
         )
-        sims4.ratings.add(Rating(5, "I love it", sims4))
+        sims4.ratings.add(Rating(5, 4, 3, 2, "I love it", "user3", sims4))
         sims4.gameConsoles = mutableListOf(ps4, xboxOne)
         ps4.games.add(sims4)
         xboxOne.games.add(sims4)
@@ -87,8 +85,8 @@ class GameService(
             "https://media.rockstargames.com/rockstargames/img/global/news/upload/actual_1364906194.jpg",
             "QkkoHAzjnUs"
         )
-        gta5.ratings.add(Rating(5, "Awesome game, you can do whatever you want!", gta5))
-        gta5.ratings.add(Rating(3, "Good game, but to much violence", gta5))
+        gta5.ratings.add(Rating(5, 4, 2, 2, "Awesome game, you can do whatever you want!", "user4", gta5))
+        gta5.ratings.add(Rating(3, 4, 5, 1, "Good game, but to much violence", "user1", gta5))
         gta5.gameConsoles = mutableListOf(xbox360, xboxOne, ps3, ps4, ps5)
         xbox360.games.add(gta5)
         xboxOne.games.add(gta5)
@@ -105,7 +103,7 @@ class GameService(
             "https://image.konsolenkost.de/item/images/9074377/full/nes-super-mario-bros-1-alternatives-cover.jpg",
             "NTa6Xbzfq1U"
         )
-        superMario1.ratings.add(Rating(5, "I love this game", superMario1))
+        superMario1.ratings.add(Rating(5, 1, 2, 3, "I love this game", "user3", superMario1))
         superMario1.gameConsoles = mutableListOf(switch, wii)
         switch.games.add(superMario1)
         wii.games.add(superMario1)

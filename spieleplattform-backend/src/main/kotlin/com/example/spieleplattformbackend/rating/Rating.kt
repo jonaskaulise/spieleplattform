@@ -6,8 +6,12 @@ import jakarta.persistence.*
 
 @Entity
 data class Rating(
-    var ratingValue: Int,
+    var graphicRating: Int,
+    var soundRating: Int,
+    var addictionRating: Int,
+    var actionRating: Int,
     var comment: String,
+    var username: String,
     @ManyToOne
     @JsonBackReference
     var game: Game,
